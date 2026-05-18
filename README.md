@@ -1,61 +1,99 @@
-# Traders at Wisconsin
+# Traders at Wisconsin — Website
 
-Website for Traders at Wisconsin, a student-led quant finance club at UW-Madison.
+Live site: [tradersatwisconsin.com](https://tradersatwisconsin.com)  
+Repo: [github.com/traders-at-wisconsin/website](https://github.com/traders-at-wisconsin/website)
 
 **Stack:** Next.js 16 (App Router) · Tailwind CSS v4 · Sanity CMS · Vercel
 
 ---
 
-## Local Development
+## For Exec Members — Updating Site Content
+
+Most content updates (sponsors, placements) are done through **Sanity Studio** — no coding required.
+
+### Accessing the CMS
+
+Go to [traders-at-wisconsin.sanity.studio](https://traders-at-wisconsin.sanity.studio) and log in with your Sanity account. Ask the current webmaster to invite you as an editor.
+
+### Adding or Removing a Sponsor
+
+1. In the studio, click **Sponsor** in the left sidebar
+2. Click **+ New Sponsor** to add one, or click an existing sponsor to edit/delete
+3. Fill in:
+   - **Company Name** — displayed as alt text if no logo
+   - **Logo** — upload a PNG or SVG (transparent background works best)
+   - **Website URL** — optional, makes the logo clickable
+   - **Tier** — Platinum (larger cards) or Gold (smaller cards)
+4. Click **Publish** — the site updates within 60 seconds
+
+### Adding or Removing a Placement
+
+1. Click **Placement** in the left sidebar
+2. Click **+ New Placement**
+3. Fill in:
+   - **Company** — firm name
+   - **Category** — Quant or Tech
+   - **Photo** — company logo (optional, falls back to text)
+4. Click **Publish** — the site updates within 60 seconds
+
+### Updating Static Text (Join page, FAQ, About section)
+
+These are hardcoded in the source files — you'll need to edit the code directly:
+
+| Content | File |
+|---------|------|
+| About section, activity descriptions | `app/page.js` |
+| Recruiting timeline steps | `app/join/page.js` |
+| FAQ questions and answers | `app/components/FAQList.js` |
+| Footer text | `app/layout.js` |
+| Nav links | `app/components/NavBar.js` |
+
+After editing, commit and push to GitHub — Vercel redeploys automatically.
+
+### Updating the "Stay Updated" Link
+
+The **Stay Updated** button on the Join page currently links to `#`. To wire it to a real form:
+
+1. Open `app/join/page.js`
+2. Find `href="#"` on the Stay Updated button
+3. Replace `#` with your Google Form URL
+4. Commit and push
+
+---
+
+## Making Code Changes
+
+### Setup
 
 ```bash
+# Clone the repo
+git clone https://github.com/traders-at-wisconsin/website.git
+cd website
+
 # Install dependencies
 npm install --legacy-peer-deps
 
-# Start Next.js
+# Create environment file
+echo "NEXT_PUBLIC_SANITY_PROJECT_ID=3vxa65y6" > .env.local
+echo "NEXT_PUBLIC_SANITY_DATASET=production" >> .env.local
+
+# Start dev server
 npm run dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000).
 
-### Environment Variables
+### Deploying Changes
 
-Create `.env.local` in the project root:
-
-```
-NEXT_PUBLIC_SANITY_PROJECT_ID=3vxa65y6
-NEXT_PUBLIC_SANITY_DATASET=production
-```
-
-### Sanity Studio
+Vercel deploys automatically on every push to `main`:
 
 ```bash
-cd sanity-studio
-npm install --legacy-peer-deps
-npx sanity dev        # runs studio at http://localhost:3333
+git add -A
+git commit -m "describe your change"
+git push
 ```
 
----
-
-## Deployment
-
-### Next.js → Vercel
-
-1. Push repo to GitHub
-2. Import project at [vercel.com/new](https://vercel.com/new)
-3. Add environment variables in the Vercel dashboard:
-   - `NEXT_PUBLIC_SANITY_PROJECT_ID` = `3vxa65y6`
-   - `NEXT_PUBLIC_SANITY_DATASET` = `production`
-4. Deploy
-
-### Sanity Studio → Sanity Hosting
-
-```bash
-cd sanity-studio
-npx sanity deploy
-```
-
-Choose a hostname when prompted (e.g. `traders-at-wisconsin`). The studio will be available at `https://traders-at-wisconsin.sanity.studio`.
+The live site updates in ~1 minute.
 
 ---
 
@@ -63,25 +101,26 @@ Choose a hostname when prompted (e.g. `traders-at-wisconsin`). The studio will b
 
 ```
 app/
-  page.js           — Home (hero + about + CTA)
-  join/page.js      — Join Us (timeline + FAQ)
-  sponsors/page.js  — Sponsors (Platinum / Gold tiers)
+  page.js            — Home (hero + about + CTA)
+  join/page.js       — Join Us (timeline + FAQ)
+  sponsors/page.js   — Sponsors (Platinum / Gold tiers)
   placements/page.js — Placements (Quant / Tech)
-  layout.js         — Root layout (NavBar + Footer)
-  not-found.js      — 404 page
+  layout.js          — Root layout (NavBar + Footer)
+  not-found.js       — 404 page
   components/
-    NavBar.js
-    FooterLinks.js
-    IntroAnimation.js
-    ScrollToAbout.js
-    FAQList.js
+    NavBar.js          — Top navigation bar
+    FooterLinks.js     — Footer nav links
+    IntroAnimation.js  — Red intro screen on first load
+    PageTransition.js  — Red screen between page navigations
+    ScrollToAbout.js   — Smooth scroll to About section
+    FAQList.js         — Accordion FAQ on Join page
 lib/
-  sanity.js         — Sanity client + urlFor helper
+  sanity.js          — Sanity client + image URL helper
 sanity-studio/
   sanity.config.js
   schemas/
-    sponsor.js
-    placement.js
+    sponsor.js       — Sponsor content type
+    placement.js     — Placement content type
 public/
   logo.png
   uw-campus.jpg
@@ -89,11 +128,26 @@ public/
 
 ---
 
-## Content Management
+## Deployment Reference
 
-Log in to the Sanity Studio to manage:
+### Vercel (Next.js)
 
-- **Sponsors** — name, logo, website, tier (Platinum / Gold)
-- **Placements** — company, category (Quant / Tech), photo
+| Setting | Value |
+|---------|-------|
+| Framework | Next.js (auto-detected) |
+| Environment variable | `NEXT_PUBLIC_SANITY_PROJECT_ID` = `3vxa65y6` |
+| Environment variable | `NEXT_PUBLIC_SANITY_DATASET` = `production` |
+| Auto-deploy | Yes, on every push to `main` |
 
-Pages with Sanity content revalidate every 60 seconds via ISR.
+### Sanity Studio
+
+```bash
+cd sanity-studio
+npx sanity deploy
+```
+
+### Domain
+
+`tradersatwisconsin.com` is registered on Squarespace. DNS is pointed to Vercel via:
+- A record: `@` → `216.198.79.1`
+- CNAME: `www` → `93f987c3765317aa.vercel-dns-017.com`
