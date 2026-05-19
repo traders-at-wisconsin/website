@@ -17,7 +17,7 @@ export default async function PlacementBanner() {
   const items = [...repeated, ...repeated]
 
   return (
-    <section className="bg-white pt-8 pb-6 relative">
+    <section className="bg-white pt-8 pb-4 relative">
       <div className="overflow-hidden">
         <div
           className="flex gap-20 w-max"
@@ -40,6 +40,9 @@ export default async function PlacementBanner() {
           ))}
         </div>
       </div>
+      <p className="text-center text-[9px] tracking-widest uppercase text-zinc-300 mt-3">
+        Our Placements
+      </p>
     </section>
   )
 }
