@@ -1,3 +1,5 @@
+export const revalidate = 60
+
 import Link from 'next/link'
 import ScrollToAbout from './components/ScrollToAbout'
 import IntroAnimation from './components/IntroAnimation'
