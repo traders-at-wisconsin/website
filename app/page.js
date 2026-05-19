@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import ScrollToAbout from './components/ScrollToAbout'
 import IntroAnimation from './components/IntroAnimation'
+import PlacementBanner from './components/PlacementBanner'
 
 const activities = [
   {
@@ -55,6 +56,10 @@ export default function Home() {
               Learn More
             </ScrollToAbout>
           </div>
+        </div>
+
+        <div className="absolute bottom-0 left-0 right-0 z-20">
+          <PlacementBanner />
         </div>
       </section>
 

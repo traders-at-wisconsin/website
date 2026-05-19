@@ -1,6 +1,7 @@
 import { defineConfig } from 'sanity'
 import { structureTool } from 'sanity/structure'
 import { visionTool } from '@sanity/vision'
+import { orderableDocumentListDeskItem } from '@sanity/orderable-document-list'
 import { schemaTypes } from './schemas'
 
 export default defineConfig({
@@ -11,7 +12,15 @@ export default defineConfig({
   dataset: process.env.SANITY_STUDIO_DATASET || 'production',
 
   plugins: [
-    structureTool(),
+    structureTool({
+      structure: (S, context) =>
+        S.list()
+          .title('Content')
+          .items([
+            orderableDocumentListDeskItem({ type: 'placement', S, context }),
+            S.documentTypeListItem('sponsor').title('Sponsors'),
+          ]),
+    }),
     visionTool(),
   ],
 

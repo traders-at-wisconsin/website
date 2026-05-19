@@ -4,10 +4,9 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
 const footerLinks = [
-  ['About',      '/#about'    ],
-  ['Join Us',    '/join'      ],
-  ['Sponsors',   '/sponsors'  ],
-  ['Placements', '/placements'],
+  ['About',    '/#about'  ],
+  ['Join Us',  '/join'    ],
+  ['Sponsors', '/sponsors'],
 ]
 
 export default function FooterLinks() {

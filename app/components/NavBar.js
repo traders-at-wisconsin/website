@@ -5,10 +5,9 @@ import Link from 'next/link'
 import Image from 'next/image'
 
 const navLinks = [
-  ['About',      '/#about'    ],
-  ['Join Us',    '/join'      ],
-  ['Sponsors',   '/sponsors'  ],
-  ['Placements', '/placements'],
+  ['About',    '/#about'  ],
+  ['Join Us',  '/join'    ],
+  ['Sponsors', '/sponsors'],
 ]
 
 export default function NavBar() {
