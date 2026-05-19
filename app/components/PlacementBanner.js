@@ -17,13 +17,7 @@ export default async function PlacementBanner() {
   const items = [...repeated, ...repeated]
 
   return (
-    <section
-      className="bg-white pt-8 pb-6 relative"
-      style={{
-        maskImage: 'linear-gradient(to right, transparent, black 12%, black 88%, transparent)',
-        WebkitMaskImage: 'linear-gradient(to right, transparent, black 12%, black 88%, transparent)',
-      }}
-    >
+    <section className="bg-white pt-8 pb-6 relative">
       <div className="overflow-hidden">
         <div
           className="flex gap-20 w-max"
