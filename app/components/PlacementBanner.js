@@ -24,14 +24,14 @@ export default async function PlacementBanner() {
           style={{ animation: `marquee ${repeated.length * 2.5}s linear infinite` }}
         >
           {items.map((p, i) => (
-            <div key={i} className="flex items-center justify-center flex-shrink-0" style={{ width: 140 }}>
+            <div key={i} className="flex items-center justify-center flex-shrink-0" style={{ width: 120, height: 40 }}>
               {p.photo ? (
                 <Image
-                  src={urlFor(p.photo).width(280).url()}
+                  src={urlFor(p.photo).width(240).height(80).fit('fill').url()}
                   alt={p.company}
-                  width={140}
-                  height={48}
-                  className="object-contain max-h-10 w-auto"
+                  width={120}
+                  height={40}
+                  className="object-contain w-full h-full"
                 />
               ) : (
                 <span className="text-xs font-medium text-zinc-400 whitespace-nowrap">{p.company}</span>
