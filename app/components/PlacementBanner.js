@@ -17,10 +17,10 @@ export default async function PlacementBanner() {
   const items = [...repeated, ...repeated]
 
   return (
-    <section className="bg-white pt-5 pb-3 relative">
+    <section className="bg-white py-6 relative">
       <div className="overflow-hidden">
         <div
-          className="flex gap-12 w-max"
+          className="flex gap-20 w-max"
           style={{ animation: `marquee ${repeated.length * 2.5}s linear infinite` }}
         >
           {items.map((p, i) => (
@@ -31,7 +31,7 @@ export default async function PlacementBanner() {
                   alt={p.company}
                   width={140}
                   height={48}
-                  className="object-contain w-auto max-h-7"
+                  className="object-contain w-auto max-h-10"
                 />
               ) : (
                 <span className="text-xs font-medium text-zinc-400 whitespace-nowrap">{p.company}</span>
@@ -40,7 +40,7 @@ export default async function PlacementBanner() {
           ))}
         </div>
       </div>
-      <p className="text-center text-[9px] tracking-widest uppercase text-zinc-300 mt-2">
+      <p className="text-center text-[9px] tracking-widest uppercase text-zinc-300 mt-3">
         Our Placements
       </p>
     </section>
