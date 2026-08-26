@@ -104,7 +104,7 @@ export default function Join() {
                 <div className="flex shrink-0 flex-col items-center lg:block">
                   <span
                     className="relative z-10 flex h-11 w-11 items-center justify-center border border-brand-600
-                               bg-brand-600 font-mono text-xs font-semibold text-white lg:h-12 lg:w-12 lg:text-sm"
+                               bg-brand-600 font-mono text-xs font-medium text-white lg:h-12 lg:w-12 lg:text-sm"
                   >
                     {String(i + 1).padStart(2, '0')}
                   </span>
