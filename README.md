@@ -75,7 +75,15 @@ Two things still help:
   small source stays soft. Anything under ~600 px wide will look soft on a
   retina screen.
 - **Prefer a transparent PNG or SVG.** Logos on a solid white or coloured
-  canvas still work, but transparency trims most accurately.
+  canvas still work — logo cells are pure white so a white canvas sits
+  flush — but transparency trims most accurately.
+
+Current assets worth re-uploading at higher resolution: **Belvedere**
+(310 px wide) and **Nvidia** (600 px). Both are visibly soft on a retina
+screen. Also worth correcting in the CMS, since the company name is the
+image's alt text and what a screen reader announces: "Open AI" → OpenAI,
+"Playstation" → PlayStation, "Cap1" → Capital One, "LA Cap Mng" → Los
+Angeles Capital, "JPMC" → J.P. Morgan.
 
 ---
 
@@ -137,6 +145,7 @@ app/
     SectionLabel.js    — Numbered mono section marker
     FAQList.js         — FAQ accordion (native <details>)
     RouteProgress.js   — Loading rule during navigation
+    PausableRegion.js  — Pause control for the scrolling logo strip
 lib/
   sanity.js          — Sanity client, image URL helper, safeFetch
   logo-metrics.js    — Logo trimming + optical-area normalisation
