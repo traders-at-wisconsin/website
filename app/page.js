@@ -52,12 +52,21 @@ export default async function Home() {
   return (
     <>
       {/* ═══ Hero ══════════════════════════════════════════════ */}
-      <section className="on-ink relative isolate flex min-h-[100svh] flex-col justify-end overflow-hidden bg-ink pt-[4.5rem] text-paper">
-        <HeroField className="absolute inset-0 h-full w-full" />
+      <section className="on-ink relative isolate flex min-h-[100svh] flex-col overflow-hidden bg-ink pt-[4.5rem] text-paper">
+        {/* Narrow screens give the graphic its own band above the
+            headline. From sm up it sits behind the whole hero. */}
+        <HeroField className="relative h-[32svh] w-full shrink-0 sm:absolute sm:inset-0 sm:h-full" />
 
-        {/* Keeps the headline legible over the graphic at every width. */}
+        {/* Blends the mobile graphic band into the section below it. */}
         <div
-          className="absolute inset-0 -z-0"
+          className="pointer-events-none absolute inset-x-0 top-[4.5rem] h-[32svh] sm:hidden"
+          aria-hidden="true"
+          style={{ background: 'linear-gradient(to bottom, transparent 50%, #0a0a0b 100%)' }}
+        />
+
+        {/* Keeps the headline legible over the graphic from sm up. */}
+        <div
+          className="absolute inset-0 -z-0 hidden sm:block"
           aria-hidden="true"
           style={{
             background:
@@ -65,12 +74,12 @@ export default async function Home() {
           }}
         />
         <div
-          className="absolute inset-x-0 bottom-0 h-40 -z-0"
+          className="absolute inset-x-0 bottom-0 h-40 -z-0 hidden sm:block"
           aria-hidden="true"
           style={{ background: 'linear-gradient(to top, #0a0a0b, transparent)' }}
         />
 
-        <div className="relative z-10 mx-auto w-full max-w-7xl px-6 pb-16 pt-24 lg:px-10 lg:pb-24">
+        <div className="relative z-10 mx-auto mt-auto w-full max-w-7xl px-6 pt-12 pb-16 sm:pt-24 lg:px-10 lg:pb-24">
           <p className="eyebrow rise text-brand-400" style={{ '--d': '80ms' }}>
             University of Wisconsin&ndash;Madison
           </p>
@@ -221,7 +230,7 @@ export default async function Home() {
               </h2>
               <Link
                 href="/sponsors"
-                className="group inline-flex shrink-0 items-center gap-2.5 border-b-2 border-brand-600 pb-2
+                className="group inline-flex shrink-0 items-center gap-2.5 border-b-2 border-brand-600 pt-3 pb-3
                            font-mono text-xs font-medium uppercase tracking-[0.16em] text-ink
                            transition-colors duration-200 hover:text-brand-600"
               >

@@ -31,21 +31,21 @@ export default function NavBar() {
   }, [open])
 
   const linkClass =
-    'text-sm text-body-dark hover:text-paper transition-colors duration-200'
+    'flex h-full items-center px-1 text-sm text-body-dark hover:text-paper transition-colors duration-200'
 
   return (
     <header className="on-ink fixed inset-x-0 top-0 z-[100] h-[4.5rem] bg-ink/95 backdrop-blur-md border-b border-hair-dark">
       <div className="mx-auto flex h-full max-w-7xl items-center justify-between px-6 lg:px-10">
         <Link
           href="/"
-          className="text-paper hover:text-brand-400 transition-colors duration-200"
+          className="flex h-full items-center py-4 text-paper hover:text-brand-400 transition-colors duration-200"
           aria-label="Traders at Wisconsin — home"
         >
           <Wordmark compact />
         </Link>
 
         {/* ── Desktop ─────────────────────────────────────── */}
-        <nav className="hidden items-center gap-9 md:flex" aria-label="Primary">
+        <nav className="hidden h-full items-center gap-8 md:flex" aria-label="Primary">
           {LINKS.map(([label, href]) => (
             <Link key={href} href={href} className={linkClass}>
               {label}

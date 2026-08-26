@@ -131,7 +131,7 @@ export default async function Sponsors() {
               </p>
               <a
                 href={`mailto:${EMAIL}`}
-                className="group mt-8 inline-flex items-center gap-2.5 border-b-2 border-brand-500 pb-2
+                className="group mt-8 inline-flex items-center gap-2.5 border-b-2 border-brand-500 pt-3 pb-3
                            font-mono text-xs font-medium uppercase tracking-[0.16em] text-paper
                            transition-colors duration-200 hover:text-brand-400"
               >

@@ -19,7 +19,7 @@ const CONNECT = [
 ]
 
 function ColumnHeading({ children }) {
-  return <h2 className="eyebrow mb-6 text-mute-dark">{children}</h2>
+  return <h2 className="eyebrow mb-4 text-mute-dark">{children}</h2>
 }
 
 export default function Footer() {
@@ -41,10 +41,10 @@ export default function Footer() {
 
           <nav aria-labelledby="footer-explore">
             <ColumnHeading><span id="footer-explore">Explore</span></ColumnHeading>
-            <ul className="flex flex-col gap-4">
+            <ul className="flex flex-col">
               {EXPLORE.map(([label, href]) => (
                 <li key={href}>
-                  <Link href={href} className="text-base hover:text-paper transition-colors duration-200">
+                  <Link href={href} className="block py-2.5 text-base hover:text-paper transition-colors duration-200">
                     {label}
                   </Link>
                 </li>
@@ -54,7 +54,7 @@ export default function Footer() {
 
           <nav aria-labelledby="footer-connect">
             <ColumnHeading><span id="footer-connect">Connect</span></ColumnHeading>
-            <ul className="flex flex-col gap-4">
+            <ul className="flex flex-col">
               {CONNECT.map(([label, href]) => {
                 const external = href.startsWith('http')
                 return (
@@ -64,7 +64,7 @@ export default function Footer() {
                       {...(external
                         ? { target: '_blank', rel: 'noopener noreferrer' }
                         : {})}
-                      className="group inline-flex items-center gap-2 text-base hover:text-paper transition-colors duration-200"
+                      className="group inline-flex items-center gap-2 py-2.5 text-base hover:text-paper transition-colors duration-200"
                     >
                       {label}
                       {external && (

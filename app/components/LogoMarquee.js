@@ -2,7 +2,7 @@ import { fitLogo } from '../../lib/logo-metrics'
 import LogoImage from './LogoImage'
 
 const CELL = { refHeight: 34, maxWidth: 178, minHeight: 20, maxHeight: 52 }
-const GAP = 64 // px between logos
+const GAP = 64 // px between logos, at the 16px base font size
 const SPEED = 46 // px per second — resolution independent
 
 /**
@@ -24,16 +24,17 @@ export default function LogoMarquee({ items, label }) {
   const row = (ariaHidden) => (
     <ul
       className="flex shrink-0 items-center"
-      style={{ gap: `${GAP}px`, paddingRight: `${GAP}px` }}
+      style={{ gap: `${GAP / 16}em`, paddingRight: `${GAP / 16}em` }}
       aria-hidden={ariaHidden || undefined}
     >
       {items.map((item, i) => (
-        <li key={`${item.company}-${i}`} className="flex h-14 shrink-0 items-center justify-center">
+        <li key={`${item.company}-${i}`} className="flex h-[3.5em] shrink-0 items-center justify-center">
           <LogoImage
             source={item.photo}
             measurement={item.measurement}
             name={item.company}
             fit={CELL}
+            fluid
             className="transition duration-300 hover:scale-[1.06]"
           />
         </li>
@@ -54,7 +55,11 @@ export default function LogoMarquee({ items, label }) {
     >
       <div
         className="marquee-track flex w-max"
-        style={{ animation: `marquee ${duration}s linear infinite` }}
+        style={{
+          animation: `marquee ${duration}s linear infinite`,
+          // Scales the entire strip on narrow screens.
+          fontSize: 'clamp(0.6rem, 2.4vw, 1rem)',
+        }}
         role="list"
         aria-label={label}
       >
