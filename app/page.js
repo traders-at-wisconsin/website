@@ -236,13 +236,13 @@ export default async function Home() {
               {sponsors.map((sponsor) => (
                 <li
                   key={sponsor.name}
-                  className="flex h-32 items-center justify-center bg-paper px-5"
+                  className="flex h-36 items-center justify-center bg-paper px-6"
                 >
                   <LogoImage
                     source={sponsor.logo}
                     measurement={sponsor.measurement}
                     name={sponsor.name}
-                    fit={{ refHeight: 32, maxWidth: 132, minHeight: 20, maxHeight: 48 }}
+                    fit={{ refHeight: 38, maxWidth: 150, minHeight: 24, maxHeight: 58 }}
                     className="transition duration-300 hover:scale-[1.06]"
                   />
                 </li>
