@@ -152,6 +152,53 @@ public/
 
 ---
 
+## Design System
+
+Everything lives in `app/globals.css` as Tailwind v4 `@theme` tokens. Use the
+tokens; avoid one-off hex values and off-scale font sizes.
+
+### Colour
+
+| Token | Value | Use |
+|-------|-------|-----|
+| `brand-400` | `#ff6b75` | Red text and marks **on dark** (7.2:1 on ink) |
+| `brand-500` | `#c5050c` | Signal red — rules, graphics, hover fills |
+| `brand-600` | `#a60211` | The mark's own red — primary buttons, red text on paper |
+| `ink` / `ink-2` / `ink-3` | `#0a0a0b` … | Dark surfaces |
+| `paper` / `paper-2` | `#faf9f7` / `#f2f1ed` | Light surfaces |
+| `body` / `mute` | `#3d3d44` / `#55555e` | Text on paper (10.3:1 / 7.1:1) |
+| `body-dark` / `mute-dark` | `#b9b9c2` / `#8f8f99` | Text on ink (10.2:1 / 6.2:1) |
+| `hair` / `hair-dark` | `#e3e1db` / `#27272e` | Hairline rules |
+
+Every text pairing above clears WCAG AA on its intended background. If you add
+a colour, check it before shipping.
+
+Red is a signal, not a surface. It belongs on hairlines, eyebrows, one primary
+button per view, and the hero graphic — not as large flat fills.
+
+### Type
+
+Base is **17px**, not 16 — the whole Tailwind scale is shifted up with it, so
+`text-base` and `text-sm` are already larger than stock. Two faces only:
+
+- **IBM Plex Sans** — headings and body
+- **IBM Plex Mono** — eyebrows, labels, buttons, numbers (never body copy)
+
+Fluid display sizes: `text-title`, `text-display`, `text-hero`.
+
+Use the `eyebrow` utility for the recurring mono uppercase label, and
+`<SectionLabel index="01">` for numbered section markers.
+
+### Motion
+
+One signature motion — the hero canvas. Everything else is a short
+colour or transform transition. `prefers-reduced-motion` is handled globally
+in `globals.css`: animations collapse, the marquee becomes a scrollable strip,
+and the hero canvas renders a single static frame. If you add motion, verify
+it under reduced motion before shipping.
+
+---
+
 ## Deployment Reference
 
 ### Vercel (Next.js)

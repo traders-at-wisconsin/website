@@ -53,20 +53,21 @@ export default async function Home() {
     <>
       {/* ═══ Hero ══════════════════════════════════════════════ */}
       <section className="on-ink relative isolate flex min-h-[100svh] flex-col overflow-hidden bg-ink pt-[4.5rem] text-paper">
-        {/* Narrow screens give the graphic its own band above the
-            headline. From sm up it sits behind the whole hero. */}
-        <HeroField className="relative h-[32svh] w-full shrink-0 sm:absolute sm:inset-0 sm:h-full" />
+        {/* Below lg the graphic takes its own band above the headline.
+            The overlaid composition needs real horizontal room, so it
+            only kicks in once the text column has somewhere to sit. */}
+        <HeroField className="relative h-[32svh] w-full shrink-0 lg:absolute lg:inset-0 lg:h-full" />
 
         {/* Blends the mobile graphic band into the section below it. */}
         <div
-          className="pointer-events-none absolute inset-x-0 top-[4.5rem] h-[32svh] sm:hidden"
+          className="pointer-events-none absolute inset-x-0 top-[4.5rem] h-[32svh] lg:hidden"
           aria-hidden="true"
           style={{ background: 'linear-gradient(to bottom, transparent 50%, #0a0a0b 100%)' }}
         />
 
         {/* Keeps the headline legible over the graphic from sm up. */}
         <div
-          className="absolute inset-0 -z-0 hidden sm:block"
+          className="absolute inset-0 -z-0 hidden lg:block"
           aria-hidden="true"
           style={{
             background:
@@ -74,12 +75,12 @@ export default async function Home() {
           }}
         />
         <div
-          className="absolute inset-x-0 bottom-0 h-40 -z-0 hidden sm:block"
+          className="absolute inset-x-0 bottom-0 h-40 -z-0 hidden lg:block"
           aria-hidden="true"
           style={{ background: 'linear-gradient(to top, #0a0a0b, transparent)' }}
         />
 
-        <div className="relative z-10 mx-auto mt-auto w-full max-w-7xl px-6 pt-12 pb-16 sm:pt-24 lg:px-10 lg:pb-24">
+        <div className="relative z-10 mx-auto mt-auto w-full max-w-7xl px-6 pt-12 pb-16 sm:pt-16 lg:px-10 lg:pt-24 lg:pb-24">
           <p className="eyebrow rise text-brand-400" style={{ '--d': '80ms' }}>
             University of Wisconsin&ndash;Madison
           </p>
