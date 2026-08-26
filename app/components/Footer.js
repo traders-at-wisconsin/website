@@ -34,9 +34,6 @@ export default function Footer() {
               A student-led quantitative finance club at the University of
               Wisconsin&ndash;Madison.
             </p>
-            <p className="eyebrow mt-8 text-mute-dark">
-              43.0766&deg; N&nbsp;&nbsp;89.4125&deg; W
-            </p>
           </div>
 
           <nav aria-labelledby="footer-explore">

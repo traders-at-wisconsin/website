@@ -59,7 +59,7 @@ function SponsorCard({ sponsor, prominent }) {
         {sponsor.website && (
           <span
             aria-hidden="true"
-            className="shrink-0 text-2xs text-hair-dark/60 transition-all duration-200 group-hover:text-brand-600
+            className="shrink-0 text-2xs text-mute transition-all duration-200 group-hover:text-brand-600
                        group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
           >
             &#8599;
@@ -69,8 +69,9 @@ function SponsorCard({ sponsor, prominent }) {
     </>
   )
 
-  const shell = `group flex ${prominent ? 'min-h-56' : 'min-h-48'} flex-col bg-paper
-                 transition-colors duration-200 hover:bg-white`
+  // Cells are pure white: several sponsor assets carry an opaque white
+  // canvas, which reads as a pasted-on sticker against warm paper.
+  const shell = `group flex ${prominent ? 'min-h-56' : 'min-h-48'} flex-col bg-white`
 
   return (
     <li className="contents">
@@ -116,10 +117,6 @@ export default async function Sponsors() {
     <>
       {/* ═══ Header ════════════════════════════════════════════ */}
       <section className="on-ink relative overflow-hidden bg-ink pt-[4.5rem] text-paper">
-        <div
-          className="dot-matrix pointer-events-none absolute inset-0 text-white/[0.05]"
-          aria-hidden="true"
-        />
         <div className="relative mx-auto max-w-7xl px-6 py-20 lg:px-10 lg:py-28">
           <SectionLabel index="01" tone="dark">Partners</SectionLabel>
 
@@ -238,7 +235,7 @@ export default async function Sponsors() {
                     {items.map((item) => (
                       <li
                         key={item.company}
-                        className="flex h-32 items-center justify-center bg-paper px-6"
+                        className="flex h-32 items-center justify-center bg-white px-6"
                       >
                         <LogoImage
                           source={item.photo}
@@ -257,7 +254,7 @@ export default async function Sponsors() {
       )}
 
       {/* ═══ CTA ═══════════════════════════════════════════════ */}
-      <section className="bg-paper-2 py-24 lg:py-28">
+      <section className="bg-paper-2 py-24 lg:py-32">
         <div className="mx-auto flex max-w-7xl flex-col gap-10 px-6 lg:flex-row lg:items-center lg:justify-between lg:px-10">
           <div>
             <h2 className="max-w-[20ch] text-title font-semibold text-ink">

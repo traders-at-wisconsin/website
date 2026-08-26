@@ -7,6 +7,7 @@ import HeroField from './components/HeroField'
 import LogoMarquee from './components/LogoMarquee'
 import LogoImage from './components/LogoImage'
 import SectionLabel from './components/SectionLabel'
+import PausableRegion from './components/PausableRegion'
 
 const WORK = [
   {
@@ -77,7 +78,7 @@ export default async function Home() {
           aria-hidden="true"
           style={{
             background:
-              'linear-gradient(96deg, #0a0a0b 0%, rgba(10,10,11,0.97) 32%, rgba(10,10,11,0.80) 48%, rgba(10,10,11,0.30) 72%, rgba(10,10,11,0.06) 100%)',
+              'linear-gradient(94deg, #0a0a0b 0%, #0a0a0b 26%, rgba(10,10,11,0.72) 40%, rgba(10,10,11,0.16) 56%, rgba(10,10,11,0) 72%)',
           }}
         />
         <div
@@ -93,9 +94,8 @@ export default async function Home() {
         <div className="relative z-10 pt-5 lg:absolute lg:inset-x-0 lg:bottom-14 lg:pt-0">
           <div className="mx-auto max-w-7xl px-6 lg:px-10">
             <p className="eyebrow max-w-md text-mute-dark">
-              Fig. 01 &mdash; Independent &plusmn;1 random walks from a common
-              origin. Terminal values accumulate into the normal distribution
-              they converge to. Simulated; illustrative only.
+              Fig. 01 &mdash; Independent &plusmn;1 random walks converging to
+              the normal distribution drawn over them. Simulated.
             </p>
           </div>
         </div>
@@ -106,7 +106,7 @@ export default async function Home() {
           </p>
 
           <h1
-            className="rise mt-7 max-w-[15ch] text-hero font-semibold tracking-[-0.035em]"
+            className="rise mt-7 text-hero font-semibold tracking-[-0.035em] sm:max-w-[15ch]"
             style={{ '--d': '180ms' }}
           >
             Quantitative finance at Wisconsin<span className="text-brand-500">.</span>
@@ -138,7 +138,7 @@ export default async function Home() {
             </Link>
             <a
               href="#work"
-              className="inline-flex items-center justify-center gap-2.5 border border-hair-dark px-8 py-4
+              className="inline-flex items-center justify-center gap-2.5 border border-edge-dark px-8 py-4
                          font-mono text-xs font-medium uppercase tracking-[0.16em] text-paper
                          transition-colors duration-200 hover:border-paper/40 hover:bg-white/5"
             >
@@ -154,40 +154,47 @@ export default async function Home() {
           list — a quant firm and a consumer tech firm are different
           claims and should not sit shoulder to shoulder.         */}
       {placements.length > 0 && (
-        <section className="border-b border-hair bg-paper py-14" aria-labelledby="placements-heading">
-          <div className="mx-auto max-w-7xl px-6 lg:px-10">
-            <h2 id="placements-heading" className="eyebrow text-mute">
-              Where our members have gone
-            </h2>
-          </div>
-
-          <div className="mt-9 flex flex-col gap-9">
+        <section className="border-b border-hair bg-white py-14" aria-labelledby="placements-heading">
+          <PausableRegion
+            label="company logo strip"
+            heading={
+              <h2 id="placements-heading" className="eyebrow text-mute">
+                Where our members have gone
+              </h2>
+            }
+          >
+          <div className="mt-10 flex flex-col gap-12">
             {PLACEMENT_GROUPS.map(({ key, label }, i) => {
               const items = placements.filter((p) => p.category === key)
               if (!items.length) return null
               return (
                 <div key={key}>
-                  <div className="mx-auto mb-4 max-w-7xl px-6 lg:px-10">
+                  <div className="mx-auto mb-5 max-w-7xl px-6 lg:px-10">
                     <h3 className="eyebrow text-brand-600">{label}</h3>
                   </div>
                   <LogoMarquee
                     items={items}
                     reverse={i % 2 === 1}
+                    // The quant row is the primary claim; everything
+                    // after it is secondary and reads that way.
+                    scale={i === 0 ? 1 : 0.82}
+                    muted={i > 0}
                     label={`${label} firms where members have been placed`}
                   />
                 </div>
               )
             })}
           </div>
+          </PausableRegion>
         </section>
       )}
 
       {/* ═══ About ═════════════════════════════════════════════ */}
-      <section id="about" className="bg-paper py-24 lg:py-36">
+      <section id="about" className="bg-paper py-24 lg:py-32">
         <div className="mx-auto max-w-7xl px-6 lg:px-10">
           <SectionLabel index="01">Mission</SectionLabel>
 
-          <div className="mt-12 grid gap-14 lg:grid-cols-12 lg:gap-16">
+          <div className="mt-11 grid gap-14 lg:grid-cols-12 lg:gap-16">
             <h2 className="text-title font-semibold text-ink lg:col-span-7">
               Making quant accessible to anyone willing to learn.
             </h2>
@@ -203,7 +210,7 @@ export default async function Home() {
             </div>
           </div>
 
-          <dl className="mt-20 grid gap-px border border-hair bg-hair sm:grid-cols-3">
+          <dl className="mt-16 grid gap-px border border-hair bg-hair sm:grid-cols-3">
             {FACTS.map(([term, detail]) => (
               <div key={term} className="bg-paper p-8 lg:p-10">
                 <dt className="text-xl font-semibold text-ink">{term}</dt>
@@ -217,28 +224,24 @@ export default async function Home() {
       {/* ═══ What we do ════════════════════════════════════════ */}
       <section
         id="work"
-        className="on-ink relative overflow-hidden bg-ink py-24 text-paper lg:py-36"
+        className="on-ink relative overflow-hidden bg-ink py-24 text-paper lg:py-32"
       >
-        <div
-          className="dot-matrix pointer-events-none absolute inset-0 text-white/[0.05]"
-          aria-hidden="true"
-        />
         <div className="relative mx-auto max-w-7xl px-6 lg:px-10">
           <SectionLabel index="02" tone="dark">What we do</SectionLabel>
 
-          <h2 className="mt-12 max-w-[20ch] text-title font-semibold">
+          <h2 className="mt-11 max-w-[20ch] text-title font-semibold">
             Three areas, running all year.
           </h2>
 
-          <div className="mt-20 grid gap-px bg-hair-dark lg:grid-cols-3">
+          <div className="mt-16 grid gap-px bg-hair-dark lg:grid-cols-3">
             {WORK.map((item, i) => (
-              <article key={item.title} className="bg-ink p-8 lg:p-10">
+              <article key={item.title} className="flex flex-col bg-ink p-8 lg:p-10">
                 <p className="font-mono text-xs font-medium text-brand-400">
                   {String(i + 1).padStart(2, '0')}
                 </p>
                 <h3 className="mt-6 text-2xl font-semibold">{item.title}</h3>
                 <p className="mt-4 text-base text-body-dark">{item.body}</p>
-                <ul className="mt-8 flex flex-wrap gap-x-3 gap-y-2">
+                <ul className="mt-8 flex flex-wrap gap-x-3 gap-y-2 pt-0 lg:mt-auto lg:pt-8">
                   {item.topics.map((topic) => (
                     <li
                       key={topic}
@@ -260,7 +263,7 @@ export default async function Home() {
           <div className="mx-auto max-w-7xl px-6 lg:px-10">
             <SectionLabel index="03">Partners</SectionLabel>
 
-            <div className="mt-12 flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
+            <div className="mt-11 flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
               <h2 className="max-w-[18ch] text-title font-semibold text-ink">
                 Supported by firms who hire quants.
               </h2>
@@ -281,7 +284,7 @@ export default async function Home() {
               {sponsors.map((sponsor) => (
                 <li
                   key={sponsor.name}
-                  className="flex h-36 items-center justify-center bg-paper px-6"
+                  className="flex h-36 items-center justify-center bg-white px-6"
                 >
                   <LogoImage
                     source={sponsor.logo}
@@ -300,14 +303,14 @@ export default async function Home() {
       {/* ═══ Join ══════════════════════════════════════════════ */}
       <section className="on-ink relative overflow-hidden bg-ink text-paper">
         <div className="absolute inset-x-0 top-0 h-px bg-brand-600" aria-hidden="true" />
-        <div className="mx-auto max-w-7xl px-6 py-24 lg:px-10 lg:py-32">
-          <div className="grid gap-12 lg:grid-cols-12 lg:items-end">
+        <div className="mx-auto max-w-7xl px-6 py-20 lg:px-10 lg:py-24">
+          <div className="grid gap-10 lg:grid-cols-12 lg:items-end">
             <div className="lg:col-span-8">
               <SectionLabel index="04" tone="dark">Recruiting</SectionLabel>
-              <h2 className="mt-10 max-w-[16ch] text-display font-semibold">
+              <h2 className="mt-11 max-w-[16ch] text-title font-semibold">
                 Applications open every semester.
               </h2>
-              <p className="mt-7 max-w-xl text-lg text-body-dark">
+              <p className="mt-6 max-w-xl text-lg text-body-dark">
                 No prior experience in finance or programming required. See the
                 full recruiting timeline and what each round looks like.
               </p>

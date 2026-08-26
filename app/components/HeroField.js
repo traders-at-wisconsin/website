@@ -105,7 +105,11 @@ export default function HeroField({ className = '' }) {
 
       histW = Math.min(W * 0.16, 170)
       histX = W - histW - Math.max(W * 0.035, 20)
-      originX = W * 0.03
+      // Once the graphic sits behind the headline rather than in its own
+      // band, start the fan clear of the text column — otherwise the
+      // origin, which is the most legible moment in the animation, ends
+      // up buried under the scrim that protects the type.
+      originX = W >= 1024 ? W * 0.34 : W * 0.03
       spanX = Math.max(histX - originX - 18, 60)
       centerY = H * 0.5
       sigma = Math.min(H * 0.17, 118)
@@ -208,7 +212,7 @@ export default function HeroField({ className = '' }) {
         const y = top + i * band
         if (y + band < 0 || y > H) continue
         const len = (bins[i] / peak) * histW
-        ctx.fillStyle = 'rgba(166,2,17,0.62)'
+        ctx.fillStyle = 'rgba(197,5,12,0.82)'
         ctx.fillRect(histX, y + band * 0.14, len, Math.max(band * 0.72, 1.2))
         ctx.fillStyle = 'rgba(255,107,117,0.85)'
         ctx.fillRect(histX + len - 1.5, y + band * 0.14, 1.5, Math.max(band * 0.72, 1.2))

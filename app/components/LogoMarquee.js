@@ -1,7 +1,7 @@
 import { fitLogo } from '../../lib/logo-metrics'
 import LogoImage from './LogoImage'
 
-const CELL = { refHeight: 34, maxWidth: 178, minHeight: 20, maxHeight: 52 }
+const BASE_CELL = { refHeight: 34, maxWidth: 178, minHeight: 20, maxHeight: 52 }
 const GAP = 64 // px between logos, at the 16px base font size
 const SPEED = 46 // px per second — resolution independent
 
@@ -11,8 +11,22 @@ const SPEED = 46 // px per second — resolution independent
  * is derived from the measured strip width, which keeps the speed
  * constant no matter how many logos the CMS holds.
  */
-export default function LogoMarquee({ items, label, reverse = false }) {
+export default function LogoMarquee({
+  items,
+  label,
+  reverse = false,
+  scale = 1,
+  muted = false,
+}) {
   if (!items?.length) return null
+
+  // `scale` lets a secondary row sit visually below a primary one.
+  const CELL = {
+    refHeight: BASE_CELL.refHeight * scale,
+    maxWidth: BASE_CELL.maxWidth * scale,
+    minHeight: BASE_CELL.minHeight * scale,
+    maxHeight: BASE_CELL.maxHeight * scale,
+  }
 
   const stripWidth = items.reduce((total, item) => {
     const { width } = fitLogo(item.measurement?.aspect, CELL)
@@ -35,7 +49,10 @@ export default function LogoMarquee({ items, label, reverse = false }) {
             name={item.company}
             fit={CELL}
             fluid
-            className="transition duration-300 hover:scale-[1.06]"
+            eager
+            className={`transition duration-300 hover:scale-[1.06] ${
+              muted ? 'grayscale opacity-60 hover:opacity-100 hover:grayscale-0' : ''
+            }`}
           />
         </li>
       ))}
@@ -48,9 +65,9 @@ export default function LogoMarquee({ items, label, reverse = false }) {
       style={{
         // Feather the ends so logos enter and leave rather than clipping.
         maskImage:
-          'linear-gradient(to right, transparent, #000 7%, #000 93%, transparent)',
+          'linear-gradient(to right, transparent, #000 15%, #000 85%, transparent)',
         WebkitMaskImage:
-          'linear-gradient(to right, transparent, #000 7%, #000 93%, transparent)',
+          'linear-gradient(to right, transparent, #000 15%, #000 85%, transparent)',
       }}
     >
       <div
@@ -58,7 +75,7 @@ export default function LogoMarquee({ items, label, reverse = false }) {
         style={{
           animation: `${reverse ? 'marquee-reverse' : 'marquee'} ${duration}s linear infinite`,
           // Scales the entire strip on narrow screens.
-          fontSize: 'clamp(0.6rem, 2.4vw, 1rem)',
+          fontSize: 'clamp(0.8rem, 2.6vw, 1rem)',
         }}
         role="list"
         aria-label={label}

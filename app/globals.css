@@ -22,6 +22,9 @@
   --color-ink-2: #121216;
   --color-ink-3: #1a1a20;
   --color-hair-dark: #27272e;
+  /* Interactive borders need 3:1 against ink (WCAG 1.4.11); the
+     decorative hairline above sits at 1.3:1 and is not enough. */
+  --color-edge-dark: #616170;
 
   /* ── Light surfaces ────────────────────────────────────── */
   --color-paper: #faf9f7;
@@ -43,7 +46,7 @@
   --text-2xs: 0.6875rem;   --text-2xs--line-height: 1.45;
   --text-xs: 0.8125rem;    --text-xs--line-height: 1.5;
   --text-sm: 0.9375rem;    --text-sm--line-height: 1.6;
-  --text-base: 1.0625rem;  --text-base--line-height: 1.7;
+  --text-base: 1.0625rem;  --text-base--line-height: 1.65;
   --text-lg: 1.1875rem;    --text-lg--line-height: 1.65;
   --text-xl: 1.375rem;     --text-xl--line-height: 1.55;
   --text-2xl: 1.625rem;    --text-2xl--line-height: 1.4;
@@ -106,12 +109,6 @@
   letter-spacing: 0.18em;
   text-transform: uppercase;
   font-weight: 500;
-}
-
-/* Faint dot matrix for dark panels. */
-@utility dot-matrix {
-  background-image: radial-gradient(currentColor 1px, transparent 1px);
-  background-size: 22px 22px;
 }
 
 /* ── Focus ────────────────────────────────────────────────────
@@ -186,4 +183,9 @@
   }
   .marquee-track::-webkit-scrollbar { display: none; }
   .marquee-track > ul[aria-hidden='true'] { display: none; }
+}
+
+/* Pause control (see PausableRegion) beats the hover rule above. */
+[data-paused='true'] .marquee-track {
+  animation-play-state: paused !important;
 }

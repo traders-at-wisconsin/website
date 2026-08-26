@@ -38,10 +38,6 @@ export default function Join() {
     <>
       {/* ═══ Header ════════════════════════════════════════════ */}
       <section className="on-ink relative overflow-hidden bg-ink pt-[4.5rem] text-paper">
-        <div
-          className="dot-matrix pointer-events-none absolute inset-0 text-white/[0.05]"
-          aria-hidden="true"
-        />
         <div className="relative mx-auto max-w-7xl px-6 py-20 lg:px-10 lg:py-28">
           <SectionLabel index="01" tone="dark">Recruiting</SectionLabel>
 
@@ -59,7 +55,7 @@ export default function Join() {
 
             {/* Stay Updated → the club's LinkedIn, where cycles are announced. */}
             <div className="lg:col-span-5 lg:pt-4">
-              <div className="border border-hair-dark p-8 lg:p-9">
+              <div className="border border-edge-dark p-8 lg:p-9">
                 <h2 className="text-xl font-semibold text-paper">Stay in the loop</h2>
                 <p className="mt-4 text-base text-body-dark">
                   Dates, deadlines, and application windows are announced on our
@@ -82,7 +78,6 @@ export default function Join() {
                     &#8599;
                   </span>
                 </a>
-                <p className="eyebrow mt-5 text-mute-dark">Opens LinkedIn</p>
               </div>
             </div>
           </div>
@@ -104,7 +99,7 @@ export default function Join() {
                 <div className="flex shrink-0 flex-col items-center lg:block">
                   <span
                     className="relative z-10 flex h-11 w-11 items-center justify-center border border-brand-600
-                               bg-brand-600 font-mono text-xs font-medium text-white lg:h-12 lg:w-12 lg:text-sm"
+                               font-mono text-xs font-medium text-brand-600 lg:h-12 lg:w-12 lg:text-sm"
                   >
                     {String(i + 1).padStart(2, '0')}
                   </span>
@@ -118,7 +113,7 @@ export default function Join() {
 
                 <div className="pb-2 lg:mt-8 lg:pr-4">
                   <h3 className="text-xl font-semibold text-ink">{stage.title}</h3>
-                  <p className="mt-3 text-base text-mute">{stage.body}</p>
+                  <p className="mt-3 text-base text-mute lg:text-sm">{stage.body}</p>
                 </div>
               </li>
             ))}
@@ -131,7 +126,7 @@ export default function Join() {
         <div className="mx-auto max-w-7xl px-6 lg:px-10">
           <SectionLabel index="03">Questions</SectionLabel>
           <div className="mt-11 grid gap-12 lg:grid-cols-12 lg:gap-16">
-            <h2 className="text-title font-semibold text-ink lg:col-span-4">
+            <h2 className="text-title font-semibold text-ink lg:col-span-4 lg:sticky lg:top-32 lg:self-start">
               Frequently asked.
             </h2>
             <div className="lg:col-span-8">
@@ -144,9 +139,9 @@ export default function Join() {
       {/* ═══ Closing ═══════════════════════════════════════════ */}
       <section className="on-ink relative bg-ink text-paper">
         <div className="absolute inset-x-0 top-0 h-px bg-brand-600" aria-hidden="true" />
-        <div className="mx-auto flex max-w-7xl flex-col gap-10 px-6 py-20 lg:flex-row lg:items-center lg:justify-between lg:px-10 lg:py-24">
+        <div className="mx-auto flex max-w-7xl flex-col gap-10 px-6 py-20 lg:flex-row lg:items-center lg:justify-between lg:px-10 lg:py-32">
           <div>
-            <h2 className="max-w-[20ch] text-3xl font-semibold">
+            <h2 className="max-w-[20ch] text-title font-semibold">
               Still have a question about recruiting?
             </h2>
             <p className="mt-4 max-w-lg text-lg text-body-dark">
@@ -156,7 +151,7 @@ export default function Join() {
           <div className="flex flex-wrap gap-4">
             <a
               href="mailto:tradersatwisconsin@gmail.com"
-              className="inline-flex items-center gap-2.5 border border-hair-dark px-7 py-4
+              className="inline-flex items-center gap-2.5 border border-edge-dark px-7 py-4
                          font-mono text-xs font-medium uppercase tracking-[0.16em] text-paper
                          transition-colors duration-200 hover:border-paper/40 hover:bg-white/5"
             >
@@ -164,7 +159,7 @@ export default function Join() {
             </a>
             <Link
               href="/sponsors"
-              className="inline-flex items-center gap-2.5 border border-hair-dark px-7 py-4
+              className="inline-flex items-center gap-2.5 border border-edge-dark px-7 py-4
                          font-mono text-xs font-medium uppercase tracking-[0.16em] text-paper
                          transition-colors duration-200 hover:border-paper/40 hover:bg-white/5"
             >

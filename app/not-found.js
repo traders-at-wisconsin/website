@@ -5,10 +5,6 @@ export const metadata = { title: 'Page not found' }
 export default function NotFound() {
   return (
     <section className="on-ink relative flex min-h-[100svh] items-center overflow-hidden bg-ink pt-[4.5rem] text-paper">
-      <div
-        className="dot-matrix pointer-events-none absolute inset-0 text-white/[0.05]"
-        aria-hidden="true"
-      />
       <div className="relative mx-auto w-full max-w-7xl px-6 py-24 lg:px-10">
         <p className="eyebrow text-brand-400">Error 404</p>
         <h1 className="mt-8 max-w-[16ch] text-display font-semibold">
@@ -31,7 +27,7 @@ export default function NotFound() {
           </Link>
           <Link
             href="/join"
-            className="inline-flex items-center gap-2.5 border border-hair-dark px-8 py-4
+            className="inline-flex items-center gap-2.5 border border-edge-dark px-8 py-4
                        font-mono text-xs font-medium uppercase tracking-[0.16em] text-paper
                        transition-colors duration-200 hover:border-paper/40 hover:bg-white/5"
           >

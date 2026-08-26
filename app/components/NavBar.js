@@ -48,9 +48,9 @@ export default function NavBar() {
           ))}
           <Link
             href="/join"
-            className="group relative inline-flex items-center gap-2 border border-brand-500 px-5 py-2.5
+            className="group relative inline-flex items-center gap-2 border border-brand-600 px-5 py-2.5
                        font-mono text-2xs font-medium uppercase tracking-[0.18em] text-paper
-                       transition-colors duration-200 hover:bg-brand-500"
+                       transition-colors duration-200 hover:bg-brand-600"
           >
             Join Us
             <span aria-hidden="true" className="transition-transform duration-200 group-hover:translate-x-0.5">
