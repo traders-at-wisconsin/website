@@ -4,8 +4,20 @@ import { useEffect, useRef } from 'react'
 
 /**
  * Signature hero graphic: independent random walks fanning out from a
- * common origin, their terminal values accumulating into a normal
- * distribution at the right — the central limit theorem, drawn live.
+ * common origin, their terminal values accumulating into the normal
+ * distribution they converge to — the central limit theorem, drawn live.
+ *
+ * The increments are Rademacher (+/-1 with equal probability), NOT
+ * Gaussian. That matters: a sum of independent normals is exactly
+ * normal at every n, so drawing Gaussian steps would demonstrate that
+ * the normal family is closed under convolution, not the CLT. With a
+ * two-point step distribution the convergence is real, and the walks
+ * pick up the lattice texture of an actual random walk.
+ *
+ * The histogram is likewise built by running the same process — a
+ * silent warm-up of WARMUP walks before the first frame — rather than
+ * by sampling the limiting density directly. The curve you see is the
+ * one the drawn walks produced.
  *
  * Deliberately abstract. No axis values, no tickers, no prices; nothing
  * here could be mistaken for real market data. Each frame draws a
@@ -13,6 +25,15 @@ import { useEffect, useRef } from 'react'
  * tab is hidden, and a single static frame is rendered for visitors who
  * prefer reduced motion.
  */
+
+const WALKS = 22
+const STEPS = 170
+const BINS = 44
+const WARMUP = 420 // silent walks run before the first frame, so the
+                   // histogram is a curve on load without being faked
+const SPREAD = 3.1 // half-width of the binned range, in standard deviations
+
+const BG = '#0a0a0b'
 
 // Deterministic PRNG, so the reduced-motion frame is stable.
 function mulberry32(seed) {
@@ -25,19 +46,21 @@ function mulberry32(seed) {
   }
 }
 
-function gaussian(rand) {
-  let u = 0
-  while (u === 0) u = rand()
-  return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * rand())
+/** One Rademacher increment: -1 or +1, equally likely. */
+function rademacher(rand) {
+  return rand() < 0.5 ? -1 : 1
 }
 
-const WALKS = 22
-const STEPS = 170
-const BINS = 44
-const SEED_SAMPLES = 90 // primes the histogram so it reads as a curve immediately
-const SPREAD = 3.1 // half-width of the binned range, in standard deviations
-
-const BG = '#0a0a0b'
+/**
+ * Walk the same process the canvas draws, without drawing it, and
+ * return the terminal value in units of the limiting standard
+ * deviation.
+ */
+function terminalZ(rand) {
+  let sum = 0
+  for (let i = 0; i < STEPS; i++) sum += rademacher(rand)
+  return sum / Math.sqrt(STEPS)
+}
 
 export default function HeroField({ className = '' }) {
   const canvasRef = useRef(null)
@@ -117,7 +140,7 @@ export default function HeroField({ className = '' }) {
 
     function seedBins() {
       bins = new Array(BINS).fill(0)
-      for (let i = 0; i < SEED_SAMPLES; i++) addSample(gaussian(rand))
+      for (let i = 0; i < WARMUP; i++) addSample(terminalZ(rand))
     }
 
     function addSample(z) {
@@ -143,7 +166,7 @@ export default function HeroField({ className = '' }) {
       const dx = spanX / STEPS
       for (const w of walks) {
         const nx = w.x + dx
-        const ny = w.y + gaussian(w.rand) * stepSigma
+        const ny = w.y + rademacher(w.rand) * stepSigma
         ctx.strokeStyle = w.accent
           ? 'rgba(255,107,117,0.72)'
           : 'rgba(226,226,236,0.30)'

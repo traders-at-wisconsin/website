@@ -128,9 +128,9 @@ export default async function Home() {
 
           {/* Honest caption: this is a simulation, not market data. */}
           <p className="eyebrow mt-16 max-w-md text-mute-dark">
-            Fig. 01 &mdash; Independent random walks from a common origin, with
-            terminal values accumulating into a normal distribution. Simulated;
-            illustrative only.
+            Fig. 01 &mdash; Independent &plusmn;1 random walks from a common
+            origin. Terminal values accumulate into the normal distribution
+            they converge to. Simulated; illustrative only.
           </p>
         </div>
       </section>
@@ -148,7 +148,7 @@ export default async function Home() {
       )}
 
       {/* ═══ About ═════════════════════════════════════════════ */}
-      <section id="about" className="scroll-mt-24 bg-paper py-24 lg:py-36">
+      <section id="about" className="bg-paper py-24 lg:py-36">
         <div className="mx-auto max-w-7xl px-6 lg:px-10">
           <SectionLabel index="01">Mission</SectionLabel>
 
@@ -182,7 +182,7 @@ export default async function Home() {
       {/* ═══ What we do ════════════════════════════════════════ */}
       <section
         id="work"
-        className="on-ink scroll-mt-24 relative overflow-hidden bg-ink py-24 text-paper lg:py-36"
+        className="on-ink relative overflow-hidden bg-ink py-24 text-paper lg:py-36"
       >
         <div
           className="dot-matrix pointer-events-none absolute inset-0 text-white/[0.05]"
