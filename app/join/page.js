@@ -25,7 +25,7 @@ const STAGES = [
   },
   {
     title: 'Interviews',
-    body: 'A select group of candidates are invited to interview with club leadership.',
+    body: 'Selected candidates are invited to interview with club leadership.',
   },
   {
     title: 'Decisions',

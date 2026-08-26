@@ -4,7 +4,6 @@ import Link from 'next/link'
 import { safeFetch } from '../../lib/sanity'
 import { measureAll } from '../../lib/logo-metrics'
 import LogoImage from '../components/LogoImage'
-import LogoMarquee from '../components/LogoMarquee'
 import SectionLabel from '../components/SectionLabel'
 
 export const metadata = {
@@ -32,6 +31,12 @@ const SUPPORT = [
 ]
 
 const TIER_ORDER = ['Platinum', 'Gold']
+
+/* Mirrors the Category options on the placement schema. */
+const PLACEMENT_GROUPS = [
+  { key: 'Quant', label: 'Quant' },
+  { key: 'Tech', label: 'Tech' },
+]
 
 function SponsorCard({ sponsor, prominent }) {
   const inner = (
@@ -89,7 +94,7 @@ function SponsorCard({ sponsor, prominent }) {
 export default async function Sponsors() {
   const [rawSponsors, rawPlacements] = await Promise.all([
     safeFetch(`*[_type == "sponsor"] | order(_createdAt asc) { name, logo, website, tier, description }`),
-    safeFetch(`*[_type == "placement"] | order(orderRank asc) { company, photo }`),
+    safeFetch(`*[_type == "placement"] | order(orderRank asc) { company, category, photo }`),
   ])
 
   const [sponsors, placements] = await Promise.all([
@@ -207,16 +212,47 @@ export default async function Sponsors() {
         </div>
       </section>
 
-      {/* ═══ Placements ════════════════════════════════════════ */}
+      {/* ═══ Outcomes ══════════════════════════════════════════
+          A static, grouped grid rather than a second marquee: a
+          recruiter reading this should be able to see the whole list
+          at once instead of waiting out a scroll loop.            */}
       {placements.length > 0 && (
-        <section className="border-b border-hair bg-paper py-20" aria-labelledby="sponsor-placements">
+        <section className="bg-paper py-24 lg:py-32" aria-labelledby="sponsor-placements">
           <div className="mx-auto max-w-7xl px-6 lg:px-10">
             <SectionLabel index="04">Outcomes</SectionLabel>
-            <h2 id="sponsor-placements" className="mt-11 mb-14 max-w-[22ch] text-3xl font-semibold text-ink">
+            <h2 id="sponsor-placements" className="mt-11 max-w-[22ch] text-title font-semibold text-ink">
               Where our members have gone.
             </h2>
+
+            {PLACEMENT_GROUPS.map(({ key, label }) => {
+              const items = placements.filter((p) => p.category === key)
+              if (!items.length) return null
+              return (
+                <div key={key} className="mt-14">
+                  <div className="mb-6 flex items-center gap-5">
+                    <h3 className="eyebrow text-brand-600">{label}</h3>
+                    <span className="h-px flex-1 bg-hair" aria-hidden="true" />
+                    <span className="eyebrow tabular text-mute">{items.length}</span>
+                  </div>
+                  <ul className="grid grid-cols-2 gap-px border border-hair bg-hair sm:grid-cols-3 lg:grid-cols-4">
+                    {items.map((item) => (
+                      <li
+                        key={item.company}
+                        className="flex h-32 items-center justify-center bg-paper px-6"
+                      >
+                        <LogoImage
+                          source={item.photo}
+                          measurement={item.measurement}
+                          name={item.company}
+                          fit={{ refHeight: 34, maxWidth: 148, minHeight: 22, maxHeight: 54 }}
+                        />
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )
+            })}
           </div>
-          <LogoMarquee items={placements} label="Companies where members have been placed" />
         </section>
       )}
 

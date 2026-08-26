@@ -29,6 +29,12 @@ const WORK = [
   },
 ]
 
+/* Mirrors the Category options on the placement schema. */
+const PLACEMENT_GROUPS = [
+  { key: 'Quant', label: 'Quant' },
+  { key: 'Tech', label: 'Tech' },
+]
+
 const FACTS = [
   ['Open to every major', 'No finance or programming background required.'],
   ['One meeting a week', 'An hour to an hour and a half, plus whatever you take on.'],
@@ -80,7 +86,21 @@ export default async function Home() {
           style={{ background: 'linear-gradient(to top, #0a0a0b, transparent)' }}
         />
 
-        <div className="relative z-10 mx-auto mt-auto w-full max-w-7xl px-6 pt-12 pb-16 sm:pt-16 lg:px-10 lg:pt-24 lg:pb-24">
+        {/* Figure caption. Sits directly under the graphic while it has
+            its own band, and drops to the foot of the hero once the
+            graphic moves behind the headline. It says plainly that this
+            is a simulation, not market data. */}
+        <div className="relative z-10 pt-5 lg:absolute lg:inset-x-0 lg:bottom-14 lg:pt-0">
+          <div className="mx-auto max-w-7xl px-6 lg:px-10">
+            <p className="eyebrow max-w-md text-mute-dark">
+              Fig. 01 &mdash; Independent &plusmn;1 random walks from a common
+              origin. Terminal values accumulate into the normal distribution
+              they converge to. Simulated; illustrative only.
+            </p>
+          </div>
+        </div>
+
+        <div className="relative z-10 mx-auto mt-auto w-full max-w-7xl px-6 pt-12 pb-16 sm:pt-16 lg:px-10 lg:pt-24 lg:pb-36">
           <p className="eyebrow rise text-brand-400" style={{ '--d': '80ms' }}>
             University of Wisconsin&ndash;Madison
           </p>
@@ -126,24 +146,39 @@ export default async function Home() {
             </a>
           </div>
 
-          {/* Honest caption: this is a simulation, not market data. */}
-          <p className="eyebrow mt-16 max-w-md text-mute-dark">
-            Fig. 01 &mdash; Independent &plusmn;1 random walks from a common
-            origin. Terminal values accumulate into the normal distribution
-            they converge to. Simulated; illustrative only.
-          </p>
         </div>
       </section>
 
-      {/* ═══ Placements ════════════════════════════════════════ */}
+      {/* ═══ Placements ════════════════════════════════════════
+          Split on the CMS category field rather than shown as one
+          list — a quant firm and a consumer tech firm are different
+          claims and should not sit shoulder to shoulder.         */}
       {placements.length > 0 && (
         <section className="border-b border-hair bg-paper py-14" aria-labelledby="placements-heading">
           <div className="mx-auto max-w-7xl px-6 lg:px-10">
-            <h2 id="placements-heading" className="eyebrow mb-9 text-mute">
+            <h2 id="placements-heading" className="eyebrow text-mute">
               Where our members have gone
             </h2>
           </div>
-          <LogoMarquee items={placements} label="Companies where members have been placed" />
+
+          <div className="mt-9 flex flex-col gap-9">
+            {PLACEMENT_GROUPS.map(({ key, label }, i) => {
+              const items = placements.filter((p) => p.category === key)
+              if (!items.length) return null
+              return (
+                <div key={key}>
+                  <div className="mx-auto mb-4 max-w-7xl px-6 lg:px-10">
+                    <h3 className="eyebrow text-brand-600">{label}</h3>
+                  </div>
+                  <LogoMarquee
+                    items={items}
+                    reverse={i % 2 === 1}
+                    label={`${label} firms where members have been placed`}
+                  />
+                </div>
+              )
+            })}
+          </div>
         </section>
       )}
 
@@ -192,7 +227,7 @@ export default async function Home() {
           <SectionLabel index="02" tone="dark">What we do</SectionLabel>
 
           <h2 className="mt-12 max-w-[20ch] text-title font-semibold">
-            Three tracks, running all year.
+            Three areas, running all year.
           </h2>
 
           <div className="mt-20 grid gap-px bg-hair-dark lg:grid-cols-3">

@@ -11,7 +11,7 @@ const SPEED = 46 // px per second — resolution independent
  * is derived from the measured strip width, which keeps the speed
  * constant no matter how many logos the CMS holds.
  */
-export default function LogoMarquee({ items, label }) {
+export default function LogoMarquee({ items, label, reverse = false }) {
   if (!items?.length) return null
 
   const stripWidth = items.reduce((total, item) => {
@@ -56,7 +56,7 @@ export default function LogoMarquee({ items, label }) {
       <div
         className="marquee-track flex w-max"
         style={{
-          animation: `marquee ${duration}s linear infinite`,
+          animation: `${reverse ? 'marquee-reverse' : 'marquee'} ${duration}s linear infinite`,
           // Scales the entire strip on narrow screens.
           fontSize: 'clamp(0.6rem, 2.4vw, 1rem)',
         }}
