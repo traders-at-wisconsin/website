@@ -1,103 +1,176 @@
+import Link from 'next/link'
 import FAQList from '../components/FAQList'
+import SectionLabel from '../components/SectionLabel'
 
-const steps = [
+export const metadata = {
+  title: 'Recruiting',
+  description:
+    'How to join Traders at Wisconsin: the recruiting timeline, what each round looks like, and when applications open.',
+}
+
+const LINKEDIN = 'https://www.linkedin.com/company/traders-at-wisconsin/'
+
+const STAGES = [
   {
     title: 'Org Fair',
-    description:
-      'Stop by our table at the university org fair. Meet current members, pick up information, and find out if Traders at Wisconsin is right for you.',
+    body: 'Stop by our table at the university org fair. Meet current members, pick up information, and find out if Traders at Wisconsin is right for you.',
   },
   {
     title: 'Information Session',
-    description:
-      'Every semester kicks off with an info session. Come learn what we\'re about, ask questions, and hear directly from current members.',
+    body: "Every semester kicks off with an info session. Come learn what we're about, ask questions, and hear directly from current members.",
   },
   {
     title: 'Applications Open',
-    description:
-      'Applications open shortly after. Fill out a short form and tell us a bit about yourself and your interest in quant.',
-  },
-  {
-    title: 'Take-Home Deliverable',
-    description:
-      'Applicants invited to move forward will receive a take-home deliverable, a hands-on project that gives you a real taste of the work we do.',
+    body: 'Applications open shortly after. Fill out a short form and tell us a bit about yourself and your interest in quant.',
   },
   {
     title: 'Interviews',
-    description:
-      'A select group of candidates are invited to interview with club leadership.',
+    body: 'A select group of candidates are invited to interview with club leadership.',
   },
   {
     title: 'Decisions',
-    description:
-      'Decisions are released and new members are welcomed into the club.',
+    body: 'Decisions are released and new members are welcomed into the club.',
   },
 ]
 
 export default function Join() {
   return (
     <>
-      {/* ── Interest Form Banner ─────────────────────────────── */}
-      <section className="bg-white py-16 px-6 border-b border-zinc-100">
-        <div className="max-w-4xl mx-auto flex flex-col md:flex-row md:items-center md:justify-between gap-8">
-          <div>
-            <h1 className="text-lg font-semibold text-zinc-800 mb-4">
-              Stay in the Loop
-            </h1>
-            <p className="text-sm text-zinc-500 font-light leading-relaxed max-w-lg">
-              Recruiting opens at the start of each semester. Sign up to stay updated on dates,
-              deadlines, and everything you need to know when applications open.
-            </p>
-          </div>
-          <a
-            href="#"
-            className="flex-shrink-0 inline-block px-8 py-3.5 bg-[#9B0000] text-white text-xs font-normal tracking-widest uppercase hover:bg-[#7d0000] transition-colors duration-200"
-          >
-            Stay Updated
-          </a>
-        </div>
-      </section>
+      {/* ═══ Header ════════════════════════════════════════════ */}
+      <section className="on-ink relative overflow-hidden bg-ink pt-[4.5rem] text-paper">
+        <div
+          className="dot-matrix pointer-events-none absolute inset-0 text-white/[0.05]"
+          aria-hidden="true"
+        />
+        <div className="relative mx-auto max-w-7xl px-6 py-20 lg:px-10 lg:py-28">
+          <SectionLabel index="01" tone="dark">Recruiting</SectionLabel>
 
-      {/* ── Timeline ─────────────────────────────────────────── */}
-      <section className="bg-zinc-50 py-24 px-6">
-        <div className="max-w-4xl mx-auto">
+          <div className="mt-11 grid gap-12 lg:grid-cols-12 lg:gap-16">
+            <div className="lg:col-span-7">
+              <h1 className="text-display font-semibold">
+                Join Traders at Wisconsin<span className="text-brand-500">.</span>
+              </h1>
+              <p className="mt-8 max-w-xl text-lg text-body-dark sm:text-xl">
+                Recruiting opens at the start of each semester. No prior
+                experience in finance or programming is required &mdash; only that
+                you want to learn.
+              </p>
+            </div>
 
-          {/* Heading */}
-          <div className="mb-20">
-            <h2 className="text-4xl md:text-5xl font-semibold text-zinc-900 leading-tight">
-              Recruiting Timeline
-            </h2>
-            <div className="w-12 h-0.5 bg-[#9B0000] mt-8" />
-          </div>
-
-          {/* Steps */}
-          <div className="relative">
-            <div className="absolute left-[15px] top-3 bottom-3 w-px bg-zinc-200" />
-
-            <div className="space-y-14">
-              {steps.map((step, i) => (
-                <div key={step.title} className="flex gap-8 items-start">
-                  <div className="relative z-10 flex-shrink-0 w-8 h-8 rounded-full bg-[#9B0000] flex items-center justify-center">
-                    <span className="text-white text-[10px] font-medium">{i}</span>
-                  </div>
-                  <div className="pt-1">
-                    <h3 className="text-base font-semibold text-zinc-800 mb-2">{step.title}</h3>
-                    <p className="text-sm text-zinc-400 font-light leading-relaxed">{step.description}</p>
-                  </div>
-                </div>
-              ))}
+            {/* Stay Updated → the club's LinkedIn, where cycles are announced. */}
+            <div className="lg:col-span-5 lg:pt-4">
+              <div className="border border-hair-dark p-8 lg:p-9">
+                <h2 className="text-xl font-semibold text-paper">Stay in the loop</h2>
+                <p className="mt-4 text-base text-body-dark">
+                  Dates, deadlines, and application windows are announced on our
+                  LinkedIn page. Follow us there so you know the moment
+                  applications open.
+                </p>
+                <a
+                  href={LINKEDIN}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group mt-8 inline-flex items-center gap-2.5 bg-brand-600 px-7 py-4
+                             font-mono text-xs font-medium uppercase tracking-[0.16em] text-white
+                             transition-colors duration-200 hover:bg-brand-500"
+                >
+                  Stay Updated
+                  <span
+                    aria-hidden="true"
+                    className="transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                  >
+                    &#8599;
+                  </span>
+                </a>
+                <p className="eyebrow mt-5 text-mute-dark">Opens LinkedIn</p>
+              </div>
             </div>
           </div>
-
         </div>
       </section>
 
-      {/* ── FAQ ──────────────────────────────────────────────── */}
-      <section className="bg-white py-24 px-6 border-t border-zinc-100">
-        <div className="max-w-4xl mx-auto">
-          <h2 className="text-lg font-semibold text-zinc-800 mb-12">
-            FAQ
+      {/* ═══ Timeline ══════════════════════════════════════════ */}
+      <section className="bg-paper py-24 lg:py-32">
+        <div className="mx-auto max-w-7xl px-6 lg:px-10">
+          <SectionLabel index="02">Timeline</SectionLabel>
+          <h2 className="mt-11 max-w-[16ch] text-title font-semibold text-ink">
+            Five stages, once a semester.
           </h2>
-          <FAQList />
+
+          <ol className="mt-20 grid gap-y-12 lg:grid-cols-5 lg:gap-x-8">
+            {STAGES.map((stage, i) => (
+              <li key={stage.title} className="relative flex gap-6 lg:block">
+                {/* Rail: vertical on small screens, horizontal on large. */}
+                <div className="flex shrink-0 flex-col items-center lg:block">
+                  <span
+                    className="relative z-10 flex h-11 w-11 items-center justify-center border border-brand-600
+                               bg-brand-600 font-mono text-xs font-semibold text-white lg:h-12 lg:w-12 lg:text-sm"
+                  >
+                    {String(i + 1).padStart(2, '0')}
+                  </span>
+                  {i < STAGES.length - 1 && (
+                    <span
+                      aria-hidden="true"
+                      className="mt-2 w-px flex-1 bg-hair lg:absolute lg:top-6 lg:left-12 lg:mt-0 lg:h-px lg:w-[calc(100%-3rem)]"
+                    />
+                  )}
+                </div>
+
+                <div className="pb-2 lg:mt-8 lg:pr-4">
+                  <h3 className="text-xl font-semibold text-ink">{stage.title}</h3>
+                  <p className="mt-3 text-base text-mute">{stage.body}</p>
+                </div>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
+
+      {/* ═══ FAQ ═══════════════════════════════════════════════ */}
+      <section className="border-t border-hair bg-paper-2 py-24 lg:py-32">
+        <div className="mx-auto max-w-7xl px-6 lg:px-10">
+          <SectionLabel index="03">Questions</SectionLabel>
+          <div className="mt-11 grid gap-12 lg:grid-cols-12 lg:gap-16">
+            <h2 className="text-title font-semibold text-ink lg:col-span-4">
+              Frequently asked.
+            </h2>
+            <div className="lg:col-span-8">
+              <FAQList />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ═══ Closing ═══════════════════════════════════════════ */}
+      <section className="on-ink relative bg-ink text-paper">
+        <div className="absolute inset-x-0 top-0 h-px bg-brand-600" aria-hidden="true" />
+        <div className="mx-auto flex max-w-7xl flex-col gap-10 px-6 py-20 lg:flex-row lg:items-center lg:justify-between lg:px-10 lg:py-24">
+          <div>
+            <h2 className="max-w-[20ch] text-3xl font-semibold">
+              Still have a question about recruiting?
+            </h2>
+            <p className="mt-4 max-w-lg text-lg text-body-dark">
+              Reach out and a member of the team will get back to you.
+            </p>
+          </div>
+          <div className="flex flex-wrap gap-4">
+            <a
+              href="mailto:tradersatwisconsin@gmail.com"
+              className="inline-flex items-center gap-2.5 border border-hair-dark px-7 py-4
+                         font-mono text-xs font-medium uppercase tracking-[0.16em] text-paper
+                         transition-colors duration-200 hover:border-paper/40 hover:bg-white/5"
+            >
+              Email us
+            </a>
+            <Link
+              href="/sponsors"
+              className="inline-flex items-center gap-2.5 border border-hair-dark px-7 py-4
+                         font-mono text-xs font-medium uppercase tracking-[0.16em] text-paper
+                         transition-colors duration-200 hover:border-paper/40 hover:bg-white/5"
+            >
+              Our sponsors
+            </Link>
+          </div>
         </div>
       </section>
     </>
