@@ -93,13 +93,6 @@
     color: #fff;
   }
 
-  /* One focus ring for the whole site. */
-  :focus-visible {
-    outline: 2px solid var(--color-brand-500);
-    outline-offset: 3px;
-    border-radius: 1px;
-  }
-  .on-ink :focus-visible { outline-color: var(--color-brand-400); }
 }
 
 /* ══════════════════════════════════════════════════════════════
@@ -115,27 +108,25 @@
   font-weight: 500;
 }
 
-/* Vertical hairlines marking the content column, terminal-style. */
-@utility rule-grid {
-  position: relative;
-}
-@utility rule-grid-lines {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background-image:
-    linear-gradient(to right, currentColor 1px, transparent 1px),
-    linear-gradient(to left, currentColor 1px, transparent 1px);
-  background-size: 50.0001% 100%;
-  background-repeat: no-repeat;
-  background-position: left, right;
-  opacity: 0.5;
-}
-
 /* Faint dot matrix for dark panels. */
 @utility dot-matrix {
   background-image: radial-gradient(currentColor 1px, transparent 1px);
   background-size: 22px 22px;
+}
+
+/* ── Focus ────────────────────────────────────────────────────
+   Deliberately unlayered: Tailwind's `transition-colors` utility
+   includes outline-color, which faded the ring in over 200 ms.
+   A keyboard focus indicator has to be immediate.               */
+:focus-visible {
+  outline: 2px solid var(--color-brand-500);
+  outline-offset: 3px;
+  border-radius: 1px;
+  transition-property: none;
+}
+
+.on-ink :focus-visible {
+  outline-color: var(--color-brand-400);
 }
 
 @keyframes marquee {

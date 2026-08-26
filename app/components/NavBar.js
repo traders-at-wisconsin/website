@@ -1,7 +1,6 @@
 'use client'
 
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import Wordmark from './Wordmark'
 
@@ -11,11 +10,7 @@ const LINKS = [
 ]
 
 export default function NavBar() {
-  const pathname = usePathname()
   const [open, setOpen] = useState(false)
-
-  // Close the panel whenever the route changes.
-  useEffect(() => setOpen(false), [pathname])
 
   // Trap the page behind the open panel and allow Escape to dismiss.
   useEffect(() => {
@@ -97,6 +92,8 @@ export default function NavBar() {
             <Link
               key={href}
               href={href}
+              // Dismiss on selection, including a tap on the current route.
+              onClick={() => setOpen(false)}
               className="border-b border-hair-dark py-5 text-2xl font-semibold text-paper
                          hover:text-brand-400 transition-colors"
             >

@@ -42,22 +42,40 @@ These are hardcoded in the source files — you'll need to edit the code directl
 
 | Content | File |
 |---------|------|
-| About section, activity descriptions | `app/page.js` |
-| Recruiting timeline steps | `app/join/page.js` |
+| Homepage copy — hero, mission, the three tracks | `app/page.js` |
+| Recruiting timeline stages | `app/join/page.js` |
 | FAQ questions and answers | `app/components/FAQList.js` |
-| Footer text | `app/layout.js` |
+| Sponsor page copy, "what sponsorship supports" | `app/sponsors/page.js` |
+| Footer text, social links | `app/components/Footer.js` |
 | Nav links | `app/components/NavBar.js` |
+| Colours, type scale, spacing | `app/globals.css` |
 
 After editing, commit and push to GitHub — Vercel redeploys automatically.
 
-### Updating the "Stay Updated" Link
+### Where the "Stay Updated" Button Goes
 
-The **Stay Updated** button on the Join page currently links to `#`. To wire it to a real form:
+The **Stay Updated** button on the Join page opens the club's LinkedIn page:
+`https://www.linkedin.com/company/traders-at-wisconsin/`
 
-1. Open `app/join/page.js`
-2. Find `href="#"` on the Stay Updated button
-3. Replace `#` with your Google Form URL
-4. Commit and push
+That is deliberate — LinkedIn is where recruiting dates and deadlines get
+posted, so the button and the FAQ both point there. If the club ever moves
+announcements elsewhere, update the `LINKEDIN` constant in **both**
+`app/join/page.js` and `app/components/Footer.js`.
+
+### A Note on Logo Files
+
+You do **not** need to crop logos before uploading them. The site measures
+each logo's real ink bounding box, trims the surrounding whitespace, and
+sizes every logo so they all carry roughly the same visual weight — a wide
+wordmark and a square mark will no longer render at wildly different sizes.
+
+Two things still help:
+
+- **Upload the highest resolution you have.** The site never upscales, so a
+  small source stays soft. Anything under ~600 px wide will look soft on a
+  retina screen.
+- **Prefer a transparent PNG or SVG.** Logos on a solid white or coloured
+  canvas still work, but transparency trims most accurately.
 
 ---
 
@@ -101,29 +119,35 @@ The live site updates in ~1 minute.
 
 ```
 app/
-  page.js            — Home (hero + about + CTA)
-  join/page.js       — Join Us (timeline + FAQ)
-  sponsors/page.js   — Sponsors (Platinum / Gold tiers)
-  placements/page.js — Placements (Quant / Tech)
-  layout.js          — Root layout (NavBar + Footer)
+  page.js            — Home (hero + placements + mission + tracks + sponsors + CTA)
+  join/page.js       — Recruiting (timeline + FAQ)
+  sponsors/page.js   — Sponsors (wall + what sponsorship supports + outcomes)
+  about/page.js      — Redirects to /#about
+  layout.js          — Root layout (fonts, metadata, NavBar + Footer)
   not-found.js       — 404 page
+  globals.css        — Design tokens: colour, type scale, utilities
   components/
-    NavBar.js          — Top navigation bar
-    FooterLinks.js     — Footer nav links
-    IntroAnimation.js  — Red intro screen on first load
-    PageTransition.js  — Red screen between page navigations
-    ScrollToAbout.js   — Smooth scroll to About section
-    FAQList.js         — Accordion FAQ on Join page
+    NavBar.js          — Top navigation + mobile menu
+    Footer.js          — Site footer
+    Mark.js            — WT monogram as inline SVG
+    Wordmark.js        — Mark + lockup
+    HeroField.js       — Animated random-walk / distribution canvas
+    LogoMarquee.js     — Scrolling company logo strip
+    LogoImage.js       — One size-normalised logo
+    SectionLabel.js    — Numbered mono section marker
+    FAQList.js         — FAQ accordion (native <details>)
+    RouteProgress.js   — Loading rule during navigation
 lib/
-  sanity.js          — Sanity client + image URL helper
+  sanity.js          — Sanity client, image URL helper, safeFetch
+  logo-metrics.js    — Logo trimming + optical-area normalisation
 sanity-studio/
   sanity.config.js
   schemas/
     sponsor.js       — Sponsor content type
     placement.js     — Placement content type
 public/
-  logo.png
-  uw-campus.jpg
+  mark.svg           — Monogram used across the site
+  logo.png           — Original square logo artwork
 ```
 
 ---
