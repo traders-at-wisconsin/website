@@ -207,8 +207,16 @@ random walks forming a normal distribution.
 The campus geometry is baked into `app/data/campus.json` (6 KB) from
 **OpenStreetMap** — 88 real building centroids, the Lake Mendota
 shoreline, and labels for the buildings this club's subjects live in.
-There is no runtime API call. To regenerate it you would re-query the
-Overpass API; the data changes rarely enough that it is committed.
+There is no runtime API call — Overpass is rate-limited and its uptime
+is not ours. The data changes rarely enough that the output is
+committed. To regenerate it:
+
+```bash
+python3 scripts/build-campus-data.py
+```
+
+That script holds the bounding box, the Overpass queries, the
+simplification tolerances and the label list, all commented.
 
 OSM is ODbL-licensed, so the attribution in the footer must stay.
 
