@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 /* ══════════════════════════════════════════════════════════════
-   Traders at Wisconsin — design tokens
+   Traders at Wisconsin, design tokens
    Dark "research terminal" surfaces, paper surfaces, one red.
    ══════════════════════════════════════════════════════════════ */
 
@@ -39,7 +39,7 @@
   --color-mute: #55555e;        /*  7.0:1 on paper */
 
   /* ── Type ──────────────────────────────────────────────────
-     base is 17px, not 16 — the whole scale steps up with it.  */
+     base is 17px, not 16, the whole scale steps up with it.  */
   --font-sans: var(--font-plex-sans), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-plex-mono), ui-monospace, SFMono-Regular, monospace;
 
@@ -167,10 +167,15 @@
 }
 
 /* ── Marquee ─────────────────────────────────────────────────
-   Pauses on hover and whenever a logo inside it takes focus.  */
-.group:hover .marquee-track,
+   Holds while the pointer rests on a logo and resumes as it leaves,
+   and while anything inside has keyboard focus.
+
+   !important is load-bearing: the track sets `animation` as an inline
+   shorthand, which carries play-state: running, and an inline style
+   beats a stylesheet rule.                                         */
+.marquee-track:has(li:hover),
 .marquee-track:focus-within {
-  animation-play-state: paused;
+  animation-play-state: paused !important;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -185,7 +190,7 @@
   .marquee-track > ul[aria-hidden='true'] { display: none; }
 }
 
-/* Pause control (see PausableRegion) beats the hover rule above. */
-[data-paused='true'] .marquee-track {
-  animation-play-state: paused !important;
+@keyframes cardIn {
+  from { opacity: 0; transform: translateY(18px) scale(0.96); }
+  to   { opacity: 1; transform: none; }
 }

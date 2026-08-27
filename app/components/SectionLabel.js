@@ -1,4 +1,4 @@
-/** Numbered mono section marker with a red rule — used site-wide. */
+/** Numbered mono section marker with a red rule, used site-wide. */
 export default function SectionLabel({ index, children, tone = 'light' }) {
   const dark = tone === 'dark'
   return (

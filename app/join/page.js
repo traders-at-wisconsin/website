@@ -48,7 +48,7 @@ export default function Join() {
               </h1>
               <p className="mt-8 max-w-xl text-lg text-body-dark sm:text-xl">
                 Recruiting opens at the start of each semester. No prior
-                experience in finance or programming is required &mdash; only that
+                experience in finance or programming is required, only that
                 you want to learn.
               </p>
             </div>

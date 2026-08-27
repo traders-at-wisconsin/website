@@ -3,7 +3,7 @@ import LogoImage from './LogoImage'
 
 const BASE_CELL = { refHeight: 34, maxWidth: 178, minHeight: 20, maxHeight: 52 }
 const GAP = 64 // px between logos, at the 16px base font size
-const SPEED = 46 // px per second — resolution independent
+const SPEED = 46 // px per second, resolution independent
 
 /**
  * The rotating company wall. One row, duplicated once and translated
@@ -11,13 +11,7 @@ const SPEED = 46 // px per second — resolution independent
  * is derived from the measured strip width, which keeps the speed
  * constant no matter how many logos the CMS holds.
  */
-export default function LogoMarquee({
-  items,
-  label,
-  reverse = false,
-  scale = 1,
-  muted = false,
-}) {
+export default function LogoMarquee({ items, label, reverse = false, scale = 1 }) {
   if (!items?.length) return null
 
   // `scale` lets a secondary row sit visually below a primary one.
@@ -50,9 +44,7 @@ export default function LogoMarquee({
             fit={CELL}
             fluid
             eager
-            className={`transition duration-300 hover:scale-[1.06] ${
-              muted ? 'grayscale opacity-60 hover:opacity-100 hover:grayscale-0' : ''
-            }`}
+            className="transition-transform duration-300 hover:scale-[1.08]"
           />
         </li>
       ))}

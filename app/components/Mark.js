@@ -1,7 +1,7 @@
 /**
  * The WT monogram, traced from the original logo artwork into four
  * straight-edged paths. Inherits `currentColor`, so it works on any
- * surface — no more 1.2 MB red-tile PNG scaled down to 32 px.
+ * surface, no more 1.2 MB red-tile PNG scaled down to 32 px.
  */
 export default function Mark({ className = '', title }) {
   return (

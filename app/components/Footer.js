@@ -32,7 +32,7 @@ export default function Footer() {
             <Mark className="mb-7 h-8 w-auto text-brand-500" title="Traders at Wisconsin" />
             <p className="max-w-sm text-lg leading-relaxed text-body-dark">
               A student-led quantitative finance club at the University of
-              Wisconsin&ndash;Madison.
+              Wisconsin-Madison.
             </p>
           </div>
 
@@ -94,7 +94,7 @@ export default function Footer() {
             </a>{' '}
             contributors
           </p>
-          <p>University of Wisconsin&ndash;Madison</p>
+          <p>University of Wisconsin-Madison</p>
         </div>
       </div>
     </footer>

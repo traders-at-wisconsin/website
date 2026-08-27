@@ -7,13 +7,12 @@ import HeroField from './components/HeroField'
 import LogoMarquee from './components/LogoMarquee'
 import LogoImage from './components/LogoImage'
 import SectionLabel from './components/SectionLabel'
-import PausableRegion from './components/PausableRegion'
 
 const WORK = [
   {
     title: 'Education',
     body:
-      'Sessions on quant theory, statistics, programming, and market structure — built around hands-on work rather than lectures, so members apply what they learn as they learn it.',
+      'Sessions on quant theory, statistics, programming, and market structure. Built around hands-on work rather than lectures, so members apply what they learn as they learn it.',
     topics: ['Probability', 'Statistics', 'Programming', 'Market structure'],
   },
   {
@@ -60,19 +59,13 @@ export default async function Home() {
     <>
       {/* ═══ Hero ══════════════════════════════════════════════ */}
       <section className="on-ink relative isolate flex min-h-[100svh] flex-col overflow-hidden bg-ink pt-[4.5rem] text-paper">
-        {/* Below lg the graphic takes its own band above the headline.
-            The overlaid composition needs real horizontal room, so it
-            only kicks in once the text column has somewhere to sit. */}
-        <HeroField className="relative h-[32svh] w-full shrink-0 lg:absolute lg:inset-0 lg:h-full" />
+        {/* The graphic runs on large screens only. On a phone it would
+            cost battery for something a thumb scrolls straight past. */}
+        <HeroField className="pointer-events-none absolute inset-0 hidden h-full w-full lg:block" />
 
-        {/* Blends the mobile graphic band into the section below it. */}
-        <div
-          className="pointer-events-none absolute inset-x-0 top-[4.5rem] h-[32svh] lg:hidden"
-          aria-hidden="true"
-          style={{ background: 'linear-gradient(to bottom, transparent 50%, #0a0a0b 100%)' }}
-        />
-
-        {/* Keeps the headline legible over the graphic from sm up. */}
+        {/* Keeps the headline legible over the graphic. The canvas also
+            punches an ellipse out of itself behind the type, so this is
+            only a light wash rather than a veil. */}
         <div
           className="absolute inset-0 -z-0 hidden lg:block"
           aria-hidden="true"
@@ -81,29 +74,10 @@ export default async function Home() {
               'linear-gradient(94deg, #0a0a0b 0%, rgba(10,10,11,0.86) 22%, rgba(10,10,11,0.3) 40%, rgba(10,10,11,0) 58%)',
           }}
         />
-        <div
-          className="absolute inset-x-0 bottom-0 h-40 -z-0 hidden lg:block"
-          aria-hidden="true"
-          style={{ background: 'linear-gradient(to top, #0a0a0b, transparent)' }}
-        />
 
-        {/* Figure caption. Sits directly under the graphic while it has
-            its own band, and drops to the foot of the hero once the
-            graphic moves behind the headline. It says plainly that this
-            is a simulation, not market data. */}
-        <div className="relative z-10 pt-5 lg:absolute lg:inset-x-0 lg:bottom-14 lg:pt-0">
-          <div className="mx-auto max-w-7xl px-6 lg:px-10">
-            <p className="eyebrow max-w-md text-mute-dark">
-              Fig. 01 &mdash; The UW&ndash;Madison campus as a network, from
-              OpenStreetMap, resolving into independent &plusmn;1 random walks
-              and the normal distribution they converge to. Simulated.
-            </p>
-          </div>
-        </div>
-
-        <div className="relative z-10 mx-auto mt-auto w-full max-w-7xl px-6 pt-12 pb-16 sm:pt-16 lg:px-10 lg:pt-24 lg:pb-36">
+        <div className="relative z-10 mx-auto mt-auto w-full max-w-7xl px-6 pt-16 pb-20 sm:pt-20 lg:px-10 lg:pt-24 lg:pb-28">
           <p className="eyebrow rise text-brand-400" style={{ '--d': '80ms' }}>
-            University of Wisconsin&ndash;Madison
+            University of Wisconsin-Madison
           </p>
 
           <h1
@@ -118,7 +92,7 @@ export default async function Home() {
             style={{ '--d': '300ms' }}
           >
             Traders at Wisconsin is a student-led quant finance club studying
-            probability, statistics, programming, and market structure &mdash; and
+            probability, statistics, programming, and market structure, and
             building the technical foundation quantitative firms hire for.
           </p>
 
@@ -146,24 +120,21 @@ export default async function Home() {
               What we do
             </a>
           </div>
-
         </div>
       </section>
 
       {/* ═══ Placements ════════════════════════════════════════
           Split on the CMS category field rather than shown as one
-          list — a quant firm and a consumer tech firm are different
+          list. A quant firm and a consumer tech firm are different
           claims and should not sit shoulder to shoulder.         */}
       {placements.length > 0 && (
         <section className="border-b border-hair bg-white py-14" aria-labelledby="placements-heading">
-          <PausableRegion
-            label="company logo strip"
-            heading={
-              <h2 id="placements-heading" className="eyebrow text-mute">
-                Where our members have gone
-              </h2>
-            }
-          >
+          <div className="mx-auto max-w-7xl px-6 lg:px-10">
+            <h2 id="placements-heading" className="eyebrow text-mute">
+              Where our members have gone
+            </h2>
+          </div>
+
           <div className="mt-10 flex flex-col gap-12">
             {PLACEMENT_GROUPS.map(({ key, label }, i) => {
               const items = placements.filter((p) => p.category === key)
@@ -176,17 +147,15 @@ export default async function Home() {
                   <LogoMarquee
                     items={items}
                     reverse={i % 2 === 1}
-                    // The quant row is the primary claim; everything
-                    // after it is secondary and reads that way.
-                    scale={i === 0 ? 1 : 0.82}
-                    muted={i > 0}
+                    // The quant row is the primary claim, so it sits
+                    // slightly larger than the one below it.
+                    scale={i === 0 ? 1 : 0.86}
                     label={`${label} firms where members have been placed`}
                   />
                 </div>
               )
             })}
           </div>
-          </PausableRegion>
         </section>
       )}
 
@@ -203,7 +172,7 @@ export default async function Home() {
             <div className="lg:col-span-5 lg:pt-2">
               <p className="text-lg text-body">
                 Our mission is to educate students about the world of quant
-                finance &mdash; from market structure and financial theory to the
+                finance, from market structure and financial theory to the
                 technical skills top firms look for. We welcome students from all
                 backgrounds and majors, and host events that make quant accessible
                 to anyone willing to learn.

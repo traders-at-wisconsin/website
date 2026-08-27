@@ -6,6 +6,7 @@ import Wordmark from './Wordmark'
 
 const LINKS = [
   ['About', '/#about'],
+  ['Recruiting', '/join'],
   ['Sponsors', '/sponsors'],
 ]
 
@@ -29,12 +30,12 @@ export default function NavBar() {
     'flex h-full items-center px-1 text-sm text-body-dark hover:text-paper transition-colors duration-200'
 
   return (
-    <header className="on-ink fixed inset-x-0 top-0 z-[100] h-[4.5rem] bg-ink/95 backdrop-blur-md border-b border-hair-dark">
+    <header className="on-ink fixed inset-x-0 top-0 z-[100] h-[4.5rem] bg-ink border-b border-hair-dark">
       <div className="mx-auto flex h-full max-w-7xl items-center justify-between px-6 lg:px-10">
         <Link
           href="/"
           className="flex h-full items-center py-4 text-paper hover:text-brand-400 transition-colors duration-200"
-          aria-label="Traders at Wisconsin — home"
+          aria-label="Traders at Wisconsin, home"
         >
           <Wordmark compact />
         </Link>
@@ -87,10 +88,10 @@ export default function NavBar() {
         hidden={!open}
         className="fixed inset-x-0 top-[4.5rem] bottom-0 bg-ink px-6 pt-10 md:hidden"
       >
-        <nav className="flex flex-col gap-1" aria-label="Primary">
-          {[...LINKS, ['Join Us', '/join']].map(([label, href], i) => (
+        <nav className="flex flex-col" aria-label="Primary">
+          {LINKS.map(([label, href], i) => (
             <Link
-              key={href}
+              key={label}
               href={href}
               // Dismiss on selection, including a tap on the current route.
               onClick={() => setOpen(false)}
@@ -104,8 +105,22 @@ export default function NavBar() {
             </Link>
           ))}
         </nav>
+
+        <Link
+          href="/join"
+          onClick={() => setOpen(false)}
+          className="group mt-8 inline-flex items-center gap-2.5 bg-brand-600 px-7 py-4
+                     font-mono text-xs font-medium uppercase tracking-[0.16em] text-white
+                     transition-colors duration-200 hover:bg-brand-500"
+        >
+          Join Us
+          <span aria-hidden="true" className="transition-transform duration-200 group-hover:translate-x-1">
+            &rarr;
+          </span>
+        </Link>
+
         <p className="mt-10 max-w-xs text-sm text-mute-dark">
-          Quantitative finance, trading and research at the University of Wisconsin–Madison.
+          Quantitative finance, trading and research at the University of Wisconsin-Madison.
         </p>
       </div>
     </header>

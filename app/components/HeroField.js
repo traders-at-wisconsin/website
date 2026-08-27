@@ -6,12 +6,12 @@ import campus from '../data/campus.json'
 /**
  * Signature hero graphic, in two acts that transform into one another.
  *
- * ACT I  — the UW–Madison campus as a network. Node positions are real
+ * ACT I , the UW-Madison campus as a network. Node positions are real
  *          OpenStreetMap building centroids, the red thread is the
  *          actual Lake Mendota shoreline, and the labelled buildings
  *          are the ones this club's disciplines live in.
  *
- * ACT II — those nodes collapse to a common origin and walk out again
+ * ACT II, those nodes collapse to a common origin and walk out again
  *          as independent ±1 random walks, their terminal values
  *          accumulating into the normal distribution they converge to.
  *
@@ -19,15 +19,14 @@ import campus from '../data/campus.json'
  * normals is exactly normal at every n, so Gaussian steps would show
  * closure under convolution rather than the central limit theorem.
  *
- * Timing, staggering and the draw-on effect follow manim's grammar —
- * `smooth` as the default rate function, `lag_ratio` cascades, and
+ * Timing, staggering and the draw-on effect follow manim's grammar,  * `smooth` as the default rate function, `lag_ratio` cascades, and
  * ShowCreation-style partial-path drawing.
  *
  * Nothing here is or resembles market data.
  */
 
 /* ── manim rate functions (manimlib/utils/rate_functions.py) ──────
-   `smooth` is bezier([0,0,0,1,1,1]) — Perlin smootherstep, with zero
+   `smooth` is bezier([0,0,0,1,1,1]). Perlin smootherstep, with zero
    first AND second derivatives at both ends. That C2 continuity is
    what stops every manim move from visually snapping. (Note this is
    ManimGL's quintic, not ManimCE's sigmoid of the same name.)      */
@@ -42,20 +41,20 @@ const rushInto = (t) => 2 * smooth(t / 2)
 const rushFrom = (t) => 2 * smooth(t / 2 + 0.5) - 1
 const thereAndBack = (t) => smooth(t < 0.5 ? 2 * t : 2 * (1 - t))
 
-/** Animation.get_sub_alpha — stagger sub-animation i of n at time t. */
+/** Animation.get_sub_alpha, stagger sub-animation i of n at time t. */
 function lagged(t, i, n, lagRatio = LAG) {
   const full = (n - 1) * lagRatio + 1
   return clamp01(t * full - i * lagRatio)
 }
 
-/** ShowPassingFlash.get_bounds — a highlight of width `tw` travelling a path. */
+/** ShowPassingFlash.get_bounds, a highlight of width `tw` travelling a path. */
 function flashBounds(alpha, tw = 0.12) {
   const upper = smooth(alpha) * (1 + tw)
   return [Math.max(upper - tw, 0), Math.min(upper, 1)]
 }
 
 /**
- * paths.path_along_arc — Transform moves points along a circular arc
+ * paths.path_along_arc. Transform moves points along a circular arc
  * rather than a straight line. Straightens out below manim's own
  * STRAIGHT_PATH_THRESHOLD of 0.01.
  */
@@ -85,10 +84,10 @@ const rademacher = (rand) => (rand() < 0.5 ? -1 : 1)
 /* ── cycle ──────────────────────────────────────────────────────── */
 const ACTS = [
   ['campusIn', 2800],
-  ['campusHold', 5400],
+  ['campusHold', 30000],
   ['collapse', 1150],
   ['walk', 3400],
-  ['distHold', 3800],
+  ['distHold', 5200],
   ['return', 1500],
 ]
 const CYCLE = ACTS.reduce((s, a) => s + a[1], 0)
@@ -115,6 +114,8 @@ export default function HeroField({ className = '' }) {
     if (!ctx) return
 
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    const wideEnough = window.matchMedia('(min-width: 1024px)')
+    if (!wideEnough.matches) return   // hidden below lg; do no work at all
     const monoFont = getComputedStyle(canvas).fontFamily || 'ui-monospace, monospace'
 
     let W = 0, H = 0, dpr = 1
@@ -129,6 +130,8 @@ export default function HeroField({ className = '' }) {
     let tracedTo = 0
     let raf = 0, running = true, t0 = 0
     let pointer = { x: 0, y: 0, on: false }
+    let clicks = 0
+    let clickTimer = 0
     const seedRand = mulberry32(20260826)
 
     function layout() {
@@ -151,7 +154,7 @@ export default function HeroField({ className = '' }) {
       }
 
       // Fit campus into the stage. Baked coords are normalised by the
-      // longer axis, so x spans [0,1] and y spans [0,1/aspect] — both
+      // longer axis, so x spans [0,1] and y spans [0,1/aspect], both
       // must therefore share ONE scale factor or the map is squashed.
       const scale = Math.min(stage.w, stage.h * campus.aspect)
       const cw = scale
@@ -297,7 +300,7 @@ export default function HeroField({ className = '' }) {
       // The substrate is UW's actual street and footpath network. Kept
       // deliberately faint: the form comes from the accumulation of
       // hundreds of near-invisible marks, not from a few bold ones.
-      // Footways outnumber roads 3.5:1 here — the pedestrian network
+      // Footways outnumber roads 3.5:1 here, the pedestrian network
       // really is the shape of this campus.
       const n = wayPx.length
       for (let w = 0; w < n; w++) {
@@ -316,7 +319,7 @@ export default function HeroField({ className = '' }) {
         )
       }
 
-      // Shoreline — the one red element in this act.
+      // Shoreline, the one red element in this act.
       for (const seg of shorePx) {
         // Drawn per span so the mask can fade it where it passes the type.
         const pts = seg.map(([x, y]) => [x + dx * 1.5, y + dy * 1.5])
@@ -379,7 +382,7 @@ export default function HeroField({ className = '' }) {
 
     /**
      * Nodes travelling between their campus seat and the common origin,
-     * along a circular arc rather than a straight line — manim's
+     * along a circular arc rather than a straight line, manim's
      * path_arc, which is most of why its Transforms read as motion
      * rather than as interpolation.
      */
@@ -648,6 +651,26 @@ export default function HeroField({ className = '' }) {
       const onVis = () => { running = !document.hidden }
       document.addEventListener('visibilitychange', onVis)
 
+      // Triple-click anywhere on the graphic to skip the campus hold
+      // and run the transform now, rather than waiting out the cycle.
+      const onClick = (e) => {
+        // The canvas sits behind the headline container, so listen on
+        // the hero section and ignore clicks on anything interactive.
+        if (e.target.closest('a, button')) return
+        clearTimeout(clickTimer)
+        clicks += 1
+        if (clicks >= 3) {
+          clicks = 0
+          const intoCollapse = ACTS[0][1] + ACTS[1][1]
+          const t = lastElapsed % CYCLE
+          if (t < intoCollapse) t0 -= intoCollapse - t - 120
+        } else {
+          clickTimer = setTimeout(() => { clicks = 0 }, 600)
+        }
+      }
+      const hero = canvas.parentElement
+      hero?.addEventListener('click', onClick)
+
       const fine = window.matchMedia('(pointer: fine)').matches
       const onMove = (e) => {
         const r = canvas.getBoundingClientRect()
@@ -663,6 +686,8 @@ export default function HeroField({ className = '' }) {
 
       teardown = () => {
         io.disconnect()
+        clearTimeout(clickTimer)
+        hero?.removeEventListener('click', onClick)
         document.removeEventListener('visibilitychange', onVis)
         if (fine) {
           window.removeEventListener('mousemove', onMove)

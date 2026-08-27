@@ -23,7 +23,7 @@ const faqs = [
 
 /**
  * Native <details> so the accordion is keyboard accessible and works
- * with JavaScript disabled — no client component needed.
+ * with JavaScript disabled, no client component needed.
  */
 export default function FAQList() {
   return (

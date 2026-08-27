@@ -4,12 +4,13 @@ import Link from 'next/link'
 import { safeFetch } from '../../lib/sanity'
 import { measureAll } from '../../lib/logo-metrics'
 import LogoImage from '../components/LogoImage'
+import SponsorCard from '../components/SponsorCard'
 import SectionLabel from '../components/SectionLabel'
 
 export const metadata = {
   title: 'Sponsors',
   description:
-    'The firms that support Traders at Wisconsin, and what partnership with a student-led quantitative finance club at UW–Madison involves.',
+    'The firms that support Traders at Wisconsin, and what partnership with a student-led quantitative finance club at UW-Madison involves.',
 }
 
 const EMAIL = 'tradersatwisconsin@gmail.com'
@@ -38,60 +39,6 @@ const PLACEMENT_GROUPS = [
   { key: 'Tech', label: 'Tech' },
 ]
 
-function SponsorCard({ sponsor, prominent }) {
-  const inner = (
-    <>
-      <div className="flex flex-1 items-center justify-center px-6 py-10">
-        <LogoImage
-          source={sponsor.logo}
-          measurement={sponsor.measurement}
-          name={sponsor.name}
-          fit={
-            prominent
-              ? { refHeight: 66, maxWidth: 330, minHeight: 42, maxHeight: 104 }
-              : { refHeight: 52, maxWidth: 262, minHeight: 32, maxHeight: 86 }
-          }
-          className="transition-transform duration-300 group-hover:scale-[1.04]"
-        />
-      </div>
-      <div className="flex items-center justify-between gap-3 border-t border-hair px-5 py-3.5">
-        <span className="eyebrow truncate text-mute">{sponsor.name}</span>
-        {sponsor.website && (
-          <span
-            aria-hidden="true"
-            className="shrink-0 text-2xs text-mute transition-all duration-200 group-hover:text-brand-600
-                       group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
-          >
-            &#8599;
-          </span>
-        )}
-      </div>
-    </>
-  )
-
-  // Cells are pure white: several sponsor assets carry an opaque white
-  // canvas, which reads as a pasted-on sticker against warm paper.
-  const shell = `group flex ${prominent ? 'min-h-56' : 'min-h-48'} flex-col bg-white`
-
-  return (
-    <li className="contents">
-      {sponsor.website ? (
-        <a
-          href={sponsor.website}
-          target="_blank"
-          rel="noopener noreferrer"
-          className={shell}
-          aria-label={`${sponsor.name} — opens in a new tab`}
-        >
-          {inner}
-        </a>
-      ) : (
-        <div className={shell}>{inner}</div>
-      )}
-    </li>
-  )
-}
-
 export default async function Sponsors() {
   const [rawSponsors, rawPlacements] = await Promise.all([
     safeFetch(`*[_type == "sponsor"] | order(_createdAt asc) { name, logo, website, tier, description }`),
@@ -103,7 +50,7 @@ export default async function Sponsors() {
     measureAll(rawPlacements, (p) => p.photo),
   ])
 
-  // Only label tiers when more than one is actually populated — a lone
+  // Only label tiers when more than one is actually populated, a lone
   // "Gold" heading over every sponsor reads as an accident.
   const groups = TIER_ORDER.map((tier) => ({
     tier,
@@ -171,11 +118,33 @@ export default async function Sponsors() {
                       : 'sm:grid-cols-2 lg:grid-cols-3'
                   }`}
                 >
-                  {group.items.map((sponsor) => (
+                  {group.items.map((sponsor, i) => (
                     <SponsorCard
                       key={sponsor.name}
-                      sponsor={sponsor}
-                      prominent={group.tier === 'Platinum'}
+                      sponsor={{
+                        name: sponsor.name,
+                        tier: sponsor.tier,
+                        website: sponsor.website,
+                        description: sponsor.description || null,
+                      }}
+                      index={i}
+                      total={group.items.length}
+                      tile={
+                        <LogoImage
+                          source={sponsor.logo}
+                          measurement={sponsor.measurement}
+                          name={sponsor.name}
+                          fit={{ refHeight: 52, maxWidth: 262, minHeight: 32, maxHeight: 86 }}
+                        />
+                      }
+                      full={
+                        <LogoImage
+                          source={sponsor.logo}
+                          measurement={sponsor.measurement}
+                          name={sponsor.name}
+                          fit={{ refHeight: 60, maxWidth: 232, minHeight: 38, maxHeight: 96 }}
+                        />
+                      }
                     />
                   ))}
                 </ul>

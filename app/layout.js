@@ -20,14 +20,14 @@ const plexMono = IBM_Plex_Mono({
 
 const SITE = 'https://tradersatwisconsin.com'
 const DESCRIPTION =
-  'Traders at Wisconsin is a student-led quantitative finance club at UW–Madison, ' +
+  'Traders at Wisconsin is a student-led quantitative finance club at UW-Madison, ' +
   'covering probability, statistics, programming, and market structure.'
 
 export const metadata = {
   metadataBase: new URL(SITE),
   title: {
-    default: 'Traders at Wisconsin — Quantitative Finance at UW–Madison',
-    template: '%s — Traders at Wisconsin',
+    default: 'Traders at Wisconsin: Quantitative Finance at UW-Madison',
+    template: '%s | Traders at Wisconsin',
   },
   description: DESCRIPTION,
   keywords: [
@@ -38,7 +38,7 @@ export const metadata = {
     type: 'website',
     url: SITE,
     siteName: 'Traders at Wisconsin',
-    title: 'Traders at Wisconsin — Quantitative Finance at UW–Madison',
+    title: 'Traders at Wisconsin: Quantitative Finance at UW-Madison',
     description: DESCRIPTION,
     locale: 'en_US',
   },
