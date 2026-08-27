@@ -651,8 +651,9 @@ export default function HeroField({ className = '' }) {
       const onVis = () => { running = !document.hidden }
       document.addEventListener('visibilitychange', onVis)
 
-      // Triple-click anywhere on the graphic to skip the campus hold
-      // and run the transform now, rather than waiting out the cycle.
+      // Triple-click anywhere on the graphic to switch acts on demand:
+      // map to graph, or graph back to map, without waiting out the
+      // 44-second cycle.
       const onClick = (e) => {
         // The canvas sits behind the headline container, so listen on
         // the hero section and ignore clicks on anything interactive.
@@ -661,9 +662,27 @@ export default function HeroField({ className = '' }) {
         clicks += 1
         if (clicks >= 3) {
           clicks = 0
-          const intoCollapse = ACTS[0][1] + ACTS[1][1]
+          // Cumulative act boundaries, derived so retiming ACTS is safe.
+          const at = (name) => {
+            let acc = 0
+            for (const [n, d] of ACTS) {
+              if (n === name) return acc
+              acc += d
+            }
+            return acc
+          }
+          const collapseAt = at('collapse')
+          const walkAt = at('walk')
+          const returnAt = at('return')
           const t = lastElapsed % CYCLE
-          if (t < intoCollapse) t0 -= intoCollapse - t - 120
+          const skipTo = (mark) => { t0 -= mark - t - 120 }
+
+          if (t < collapseAt) {
+            skipTo(collapseAt)          // showing the map: run the transform
+          } else if (t >= walkAt && t < returnAt) {
+            skipTo(returnAt)            // showing the graph: bring the map back
+          }
+          // Mid-transition, leave it alone.
         } else {
           clickTimer = setTimeout(() => { clicks = 0 }, 600)
         }

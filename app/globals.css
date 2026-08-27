@@ -167,13 +167,14 @@
 }
 
 /* ── Marquee ─────────────────────────────────────────────────
-   Holds while the pointer rests on a logo and resumes as it leaves,
-   and while anything inside has keyboard focus.
+   Holds while the pointer is anywhere over the strip, gaps between
+   logos included, and resumes as it leaves. Also holds while anything
+   inside has keyboard focus.
 
-   !important is load-bearing: the track sets `animation` as an inline
-   shorthand, which carries play-state: running, and an inline style
-   beats a stylesheet rule.                                         */
-.marquee-track:has(li:hover),
+   !important is load-bearing: the track sets the animation shorthand
+   inline, which carries play-state: running, and an inline style beats
+   a stylesheet rule.                                               */
+.marquee-strip:hover .marquee-track,
 .marquee-track:focus-within {
   animation-play-state: paused !important;
 }

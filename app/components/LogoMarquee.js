@@ -53,7 +53,7 @@ export default function LogoMarquee({ items, label, reverse = false, scale = 1 }
 
   return (
     <div
-      className="group relative overflow-hidden"
+      className="marquee-strip relative overflow-hidden"
       style={{
         // Feather the ends so logos enter and leave rather than clipping.
         maskImage:
