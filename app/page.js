@@ -215,8 +215,20 @@ export default async function Home() {
                   {item.topics.map((topic) => (
                     <li
                       key={topic}
-                      className="border border-hair-dark px-3 py-1.5 font-mono text-2xs uppercase tracking-[0.12em] text-mute-dark"
+                      className="group/chip relative isolate overflow-hidden border border-hair-dark
+                                 px-3 py-1.5 font-mono text-2xs uppercase tracking-[0.12em]
+                                 text-mute-dark transition-colors duration-300
+                                 hover:border-brand-600 hover:text-white"
                     >
+                      {/* Wipes in from the left, the same gesture the
+                          sponsor tiles use. White on brand-600 is 8:1,
+                          so the label stays readable once it fills. */}
+                      <span
+                        aria-hidden="true"
+                        className="absolute inset-0 -z-10 origin-left scale-x-0 bg-brand-600
+                                   transition-transform duration-[350ms] ease-out-quint
+                                   group-hover/chip:scale-x-100"
+                      />
                       {topic}
                     </li>
                   ))}
