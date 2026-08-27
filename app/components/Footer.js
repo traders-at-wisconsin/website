@@ -80,8 +80,20 @@ export default function Footer() {
           </nav>
         </div>
 
-        <div className="flex flex-col gap-3 py-8 font-mono text-2xs uppercase tracking-[0.16em] text-mute-dark sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex flex-col gap-3 py-8 font-mono text-2xs uppercase tracking-[0.16em] text-mute-dark sm:flex-row sm:flex-wrap sm:items-center sm:justify-between">
           <p>&copy; {new Date().getFullYear()} Traders at Wisconsin</p>
+          <p>
+            Campus geometry &copy;{' '}
+            <a
+              href="https://www.openstreetmap.org/copyright"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block py-2 underline underline-offset-2 hover:text-body-dark transition-colors"
+            >
+              OpenStreetMap
+            </a>{' '}
+            contributors
+          </p>
           <p>University of Wisconsin&ndash;Madison</p>
         </div>
       </div>

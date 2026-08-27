@@ -198,6 +198,24 @@ Fluid display sizes: `text-title`, `text-display`, `text-hero`.
 Use the `eyebrow` utility for the recurring mono uppercase label, and
 `<SectionLabel index="01">` for numbered section markers.
 
+### The Hero Graphic
+
+`app/components/HeroField.js` runs a two-act loop: the UW–Madison campus
+as a network, which then collapses to a point and walks back out as
+random walks forming a normal distribution.
+
+The campus geometry is baked into `app/data/campus.json` (6 KB) from
+**OpenStreetMap** — 88 real building centroids, the Lake Mendota
+shoreline, and labels for the buildings this club's subjects live in.
+There is no runtime API call. To regenerate it you would re-query the
+Overpass API; the data changes rarely enough that it is committed.
+
+OSM is ODbL-licensed, so the attribution in the footer must stay.
+
+Timing, easing and staggering follow manim's grammar — `smooth` is the
+quintic smootherstep (6t⁵−15t⁴+10t³), transforms travel along a circular
+`path_arc`, and reveals cascade with a 0.05 lag ratio.
+
 ### Motion
 
 One signature motion — the hero canvas. Everything else is a short

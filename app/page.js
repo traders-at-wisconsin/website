@@ -78,7 +78,7 @@ export default async function Home() {
           aria-hidden="true"
           style={{
             background:
-              'linear-gradient(94deg, #0a0a0b 0%, #0a0a0b 26%, rgba(10,10,11,0.72) 40%, rgba(10,10,11,0.16) 56%, rgba(10,10,11,0) 72%)',
+              'linear-gradient(94deg, #0a0a0b 0%, rgba(10,10,11,0.86) 22%, rgba(10,10,11,0.3) 40%, rgba(10,10,11,0) 58%)',
           }}
         />
         <div
@@ -94,8 +94,9 @@ export default async function Home() {
         <div className="relative z-10 pt-5 lg:absolute lg:inset-x-0 lg:bottom-14 lg:pt-0">
           <div className="mx-auto max-w-7xl px-6 lg:px-10">
             <p className="eyebrow max-w-md text-mute-dark">
-              Fig. 01 &mdash; Independent &plusmn;1 random walks converging to
-              the normal distribution drawn over them. Simulated.
+              Fig. 01 &mdash; The UW&ndash;Madison campus as a network, from
+              OpenStreetMap, resolving into independent &plusmn;1 random walks
+              and the normal distribution they converge to. Simulated.
             </p>
           </div>
         </div>
