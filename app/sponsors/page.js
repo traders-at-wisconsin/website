@@ -42,7 +42,12 @@ const PLACEMENT_GROUPS = [
 export default async function Sponsors() {
   const [rawSponsors, rawPlacements] = await Promise.all([
     safeFetch(`*[_type == "sponsor"] | order(_createdAt asc) { name, logo, website, tier, description }`),
-    safeFetch(`*[_type == "placement"] | order(orderRank asc) { company, category, photo }`),
+    // Excludes Playstation from the outcomes grid on this page, at the
+    // requester's ask. Still present in the CMS and on the homepage
+    // strip; only filtered here.
+    safeFetch(
+      `*[_type == "placement" && company != "Playstation"] | order(orderRank asc) { company, category, photo }`
+    ),
   ])
 
   const [sponsors, placements] = await Promise.all([
