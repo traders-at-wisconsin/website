@@ -8,6 +8,17 @@ import LogoMarquee from './components/LogoMarquee'
 import LogoImage from './components/LogoImage'
 import SectionLabel from './components/SectionLabel'
 
+// Stripped to the bare viewform URL. The URL as originally shared
+// carried an editor session's ts/edit_requested params, which are not
+// meant for public distribution.
+//
+// NOTE: as of this writing the form returns 401 and prompts sign-in
+// for a signed-out visitor. It needs "Anyone with the link" access in
+// Google Forms > Settings before this link is usable by prospective
+// members. See README for details.
+const INTEREST_FORM =
+  'https://docs.google.com/forms/d/131BKCa0_IC_nCEHuBMtElP1nxGZS3Darl7nokxFVJQc/viewform'
+
 const WORK = [
   {
     title: 'Education',
@@ -297,7 +308,7 @@ export default async function Home() {
                 full recruiting timeline and what each round looks like.
               </p>
             </div>
-            <div className="lg:col-span-4 lg:justify-self-end">
+            <div className="flex flex-col items-start gap-4 lg:col-span-4 lg:items-end">
               <Link
                 href="/join"
                 className="group inline-flex items-center gap-3 bg-brand-600 px-9 py-5
@@ -309,6 +320,21 @@ export default async function Home() {
                   &rarr;
                 </span>
               </Link>
+              <a
+                href={INTEREST_FORM}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group inline-flex items-center gap-1.5 py-3 font-mono text-2xs uppercase
+                           tracking-[0.16em] text-mute-dark transition-colors duration-200 hover:text-paper"
+              >
+                Fill Out Interest Form
+                <span
+                  aria-hidden="true"
+                  className="transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                >
+                  &#8599;
+                </span>
+              </a>
             </div>
           </div>
         </div>

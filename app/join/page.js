@@ -10,6 +10,13 @@ export const metadata = {
 
 const LINKEDIN = 'https://www.linkedin.com/company/traders-at-wisconsin/'
 
+// Stripped to the bare viewform URL; see the matching note in app/page.js.
+// NOTE: currently returns 401 / prompts sign-in for a signed-out
+// visitor. Needs "Anyone with the link" access in Google Forms before
+// this link works for prospective members.
+const INTEREST_FORM =
+  'https://docs.google.com/forms/d/131BKCa0_IC_nCEHuBMtElP1nxGZS3Darl7nokxFVJQc/viewform'
+
 const STAGES = [
   {
     title: 'Org Fair',
@@ -71,6 +78,21 @@ export default function Join() {
                              transition-colors duration-200 hover:bg-brand-500"
                 >
                   Stay Updated
+                  <span
+                    aria-hidden="true"
+                    className="transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                  >
+                    &#8599;
+                  </span>
+                </a>
+                <a
+                  href={INTEREST_FORM}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group mt-2 inline-flex items-center gap-1.5 py-3 font-mono text-2xs uppercase
+                             tracking-[0.16em] text-mute-dark transition-colors duration-200 hover:text-paper"
+                >
+                  Or fill out our interest form
                   <span
                     aria-hidden="true"
                     className="transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
