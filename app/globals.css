@@ -1,21 +1,197 @@
 @import "tailwindcss";
 
-html {
-  scroll-behavior: smooth;
+/* ══════════════════════════════════════════════════════════════
+   Traders at Wisconsin, design tokens
+   Dark "research terminal" surfaces, paper surfaces, one red.
+   ══════════════════════════════════════════════════════════════ */
+
+@theme {
+  /* ── Brand red ─────────────────────────────────────────────
+     600 is the mark's own red. 400 is the on-dark tint (7.2:1
+     on ink). 500 is the signal red for fills and graphics.     */
+  --color-brand-200: #ffc9cd;
+  --color-brand-300: #ff8a92;
+  --color-brand-400: #ff6b75;
+  --color-brand-500: #c5050c;
+  --color-brand-600: #a60211;
+  --color-brand-700: #86000e;
+  --color-brand-900: #3d0007;
+
+  /* ── Dark surfaces ─────────────────────────────────────── */
+  --color-ink: #0a0a0b;
+  --color-ink-2: #121216;
+  --color-ink-3: #1a1a20;
+  --color-hair-dark: #27272e;
+  /* Interactive borders need 3:1 against ink (WCAG 1.4.11); the
+     decorative hairline above sits at 1.3:1 and is not enough. */
+  --color-edge-dark: #616170;
+
+  /* ── Light surfaces ────────────────────────────────────── */
+  --color-paper: #faf9f7;
+  --color-paper-2: #f2f1ed;
+  --color-hair: #e3e1db;
+
+  /* ── Text ──────────────────────────────────────────────────
+     Every value below clears WCAG AA on its intended ground.  */
+  --color-body-dark: #b9b9c2;   /*  9.9:1 on ink   */
+  --color-mute-dark: #8f8f99;   /*  6.0:1 on ink   */
+  --color-body: #3d3d44;        /* 10.2:1 on paper */
+  --color-mute: #55555e;        /*  7.0:1 on paper */
+
+  /* ── Type ──────────────────────────────────────────────────
+     base is 17px, not 16, the whole scale steps up with it.  */
+  --font-sans: var(--font-plex-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, SFMono-Regular, monospace;
+
+  --text-2xs: 0.6875rem;   --text-2xs--line-height: 1.45;
+  --text-xs: 0.8125rem;    --text-xs--line-height: 1.5;
+  --text-sm: 0.9375rem;    --text-sm--line-height: 1.6;
+  --text-base: 1.0625rem;  --text-base--line-height: 1.65;
+  --text-lg: 1.1875rem;    --text-lg--line-height: 1.65;
+  --text-xl: 1.375rem;     --text-xl--line-height: 1.55;
+  --text-2xl: 1.625rem;    --text-2xl--line-height: 1.4;
+  --text-3xl: 2rem;        --text-3xl--line-height: 1.28;
+  --text-4xl: 2.5rem;      --text-4xl--line-height: 1.18;
+  --text-5xl: 3.25rem;     --text-5xl--line-height: 1.08;
+  --text-6xl: 4rem;        --text-6xl--line-height: 1.04;
+
+  /* Fluid display sizes */
+  --text-title: clamp(2.25rem, 5.2vw, 3.75rem);  --text-title--line-height: 1.1;
+  --text-display: clamp(2.75rem, 7vw, 5rem);     --text-display--line-height: 1.05;
+  --text-hero: clamp(2.875rem, 8.2vw, 6.5rem);   --text-hero--line-height: 0.98;
+
+  --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    /* Clears the fixed 4.5rem header on #hash landings. */
+    scroll-padding-top: 5.5rem;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    background: var(--color-paper);
+    color: var(--color-body);
+    font-size: var(--text-base);
+    line-height: var(--text-base--line-height);
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4 {
+    letter-spacing: -0.022em;
+    text-wrap: balance;
+  }
+
+  p { text-wrap: pretty; }
+
+  /* Numbers line up in tables, tickers and stat rows. */
+  .tabular, time, .eyebrow { font-variant-numeric: tabular-nums; }
+
+  ::selection {
+    background: var(--color-brand-600);
+    color: #fff;
+  }
+
+}
+
+/* ══════════════════════════════════════════════════════════════
+   Utilities
+   ══════════════════════════════════════════════════════════════ */
+
+/* Mono eyebrow: the recurring "research document" label. */
+@utility eyebrow {
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+/* ── Focus ────────────────────────────────────────────────────
+   Deliberately unlayered: Tailwind's `transition-colors` utility
+   includes outline-color, which faded the ring in over 200 ms.
+   A keyboard focus indicator has to be immediate.               */
+:focus-visible {
+  outline: 2px solid var(--color-brand-500);
+  outline-offset: 3px;
+  border-radius: 1px;
+  transition-property: none;
+}
+
+.on-ink :focus-visible {
+  outline-color: var(--color-brand-400);
 }
 
 @keyframes marquee {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(-50%, 0, 0); }
 }
 
-@keyframes fadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(18px);
+@keyframes marquee-reverse {
+  from { transform: translate3d(-50%, 0, 0); }
+  to   { transform: translate3d(0, 0, 0); }
+}
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: none; }
+}
+
+@keyframes sweep {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+
+/* Staggered entrance, driven by --d on the element. */
+@utility rise {
+  animation: rise 0.7s var(--ease-out-quint) both;
+  animation-delay: var(--d, 0ms);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+
+  /* Entrance animations must not leave content invisible. */
+  .rise { opacity: 1 !important; transform: none !important; }
+}
+
+/* ── Marquee ─────────────────────────────────────────────────
+   Holds while the pointer is anywhere over the strip, gaps between
+   logos included, and resumes as it leaves. Also holds while anything
+   inside has keyboard focus.
+
+   !important is load-bearing: the track sets the animation shorthand
+   inline, which carries play-state: running, and an inline style beats
+   a stylesheet rule.                                               */
+.marquee-strip:hover .marquee-track,
+.marquee-track:focus-within {
+  animation-play-state: paused !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* No motion: become a plain scrollable strip instead. */
+  .marquee-track {
+    animation: none !important;
+    width: auto;
+    overflow-x: auto;
+    scrollbar-width: none;
   }
+  .marquee-track::-webkit-scrollbar { display: none; }
+  .marquee-track > ul[aria-hidden='true'] { display: none; }
+}
+
+@keyframes cardIn {
+  from { opacity: 0; transform: translateY(18px) scale(0.96); }
+  to   { opacity: 1; transform: none; }
 }

@@ -5,8 +5,11 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: 'cdn.sanity.io',
+        pathname: '/images/3vxa65y6/**',
       },
     ],
+    // Required from Next 16 onward for any quality other than 75.
+    qualities: [75, 90],
   },
 }
 
