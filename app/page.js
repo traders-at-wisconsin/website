@@ -8,16 +8,15 @@ import LogoMarquee from './components/LogoMarquee'
 import LogoImage from './components/LogoImage'
 import SectionLabel from './components/SectionLabel'
 
-// Stripped to the bare viewform URL. The URL as originally shared
-// carried an editor session's ts/edit_requested params, which are not
-// meant for public distribution.
+// The live application form for the current recruiting cycle, closing
+// September 17 at 11:59 PM CST.
 //
-// NOTE: as of this writing the form returns 401 and prompts sign-in
-// for a signed-out visitor. It needs "Anyone with the link" access in
-// Google Forms > Settings before this link is usable by prospective
-// members. See README for details.
-const INTEREST_FORM =
-  'https://docs.google.com/forms/d/131BKCa0_IC_nCEHuBMtElP1nxGZS3Darl7nokxFVJQc/viewform'
+// NOTE: as of this writing, opening this link redirects a signed-out
+// visitor to a Google account sign-in page rather than the form
+// itself. Needs "Anyone with the link" access in Google Forms >
+// Settings before this is usable by prospective members. See README.
+const APPLICATION_FORM = 'https://forms.gle/LGvknpaCkSKnGUoD8'
+const APPLICATION_DEADLINE = 'September 17, 11:59 PM CST'
 
 const WORK = [
   {
@@ -74,7 +73,7 @@ export default async function Home() {
   return (
     <>
       {/* ═══ Hero ══════════════════════════════════════════════ */}
-      <section className="on-ink relative isolate flex min-h-[100svh] flex-col overflow-hidden bg-ink pt-[4.5rem] text-paper">
+      <section className="on-ink relative isolate flex min-h-[100svh] flex-col overflow-hidden bg-ink pt-[var(--header-h)] text-paper">
         {/* The graphic runs on large screens only. On a phone it would
             cost battery for something a thumb scrolls straight past. */}
         <HeroField className="pointer-events-none absolute inset-0 hidden h-full w-full lg:block" />
@@ -278,11 +277,14 @@ export default async function Home() {
               </Link>
             </div>
 
-            <ul className="mt-16 grid grid-cols-2 gap-px border border-hair bg-hair sm:grid-cols-3 lg:grid-cols-6">
+            {/* Flex, not grid: an odd sponsor count leaves a grid's
+                trailing cell blank. justify-center keeps a short last
+                row centered instead. */}
+            <ul className="mt-16 flex flex-wrap justify-center gap-px border border-hair bg-hair">
               {sponsors.map((sponsor) => (
                 <li
                   key={sponsor.name}
-                  className="flex h-36 items-center justify-center bg-white px-6"
+                  className="flex h-36 w-1/2 items-center justify-center bg-white px-6 sm:w-1/3 lg:w-1/6"
                 >
                   <LogoImage
                     source={sponsor.logo}
@@ -306,40 +308,37 @@ export default async function Home() {
             <div className="lg:col-span-8">
               <SectionLabel index="04" tone="dark">Recruiting</SectionLabel>
               <h2 className="mt-11 max-w-[16ch] text-title font-semibold">
-                Applications open every semester.
+                Applications are open now.
               </h2>
               <p className="mt-6 max-w-xl text-lg text-body-dark">
-                No prior experience in finance or programming required. See the
-                full recruiting timeline and what each round looks like.
+                Apply by {APPLICATION_DEADLINE}. No prior experience in finance
+                or programming required.
               </p>
             </div>
             <div className="flex flex-col items-start gap-4 lg:col-span-4 lg:items-end">
-              <Link
-                href="/join"
+              <a
+                href={APPLICATION_FORM}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="group inline-flex items-center gap-3 bg-brand-600 px-9 py-5
                            font-mono text-sm font-medium uppercase tracking-[0.16em] text-white
                            transition-colors duration-200 hover:bg-brand-500"
               >
-                Join Us
+                Apply Now
+                <span aria-hidden="true" className="transition-transform duration-200 group-hover:translate-x-1">
+                  &rarr;
+                </span>
+              </a>
+              <Link
+                href="/join"
+                className="group inline-flex items-center gap-1.5 py-3 font-mono text-2xs uppercase
+                           tracking-[0.16em] text-mute-dark transition-colors duration-200 hover:text-paper"
+              >
+                Full recruiting timeline
                 <span aria-hidden="true" className="transition-transform duration-200 group-hover:translate-x-1">
                   &rarr;
                 </span>
               </Link>
-              <a
-                href={INTEREST_FORM}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group inline-flex items-center gap-1.5 py-3 font-mono text-2xs uppercase
-                           tracking-[0.16em] text-mute-dark transition-colors duration-200 hover:text-paper"
-              >
-                Fill Out Interest Form
-                <span
-                  aria-hidden="true"
-                  className="transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
-                >
-                  &#8599;
-                </span>
-              </a>
             </div>
           </div>
         </div>

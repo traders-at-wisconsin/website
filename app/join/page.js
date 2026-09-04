@@ -10,12 +10,10 @@ export const metadata = {
 
 const LINKEDIN = 'https://www.linkedin.com/company/traders-at-wisconsin/'
 
-// Stripped to the bare viewform URL; see the matching note in app/page.js.
-// NOTE: currently returns 401 / prompts sign-in for a signed-out
-// visitor. Needs "Anyone with the link" access in Google Forms before
-// this link works for prospective members.
-const INTEREST_FORM =
-  'https://docs.google.com/forms/d/131BKCa0_IC_nCEHuBMtElP1nxGZS3Darl7nokxFVJQc/viewform'
+// The live application form for the current recruiting cycle; see the
+// matching note in app/page.js.
+const APPLICATION_FORM = 'https://forms.gle/LGvknpaCkSKnGUoD8'
+const APPLICATION_DEADLINE = 'September 17, 11:59 PM CST'
 
 const STAGES = [
   {
@@ -28,7 +26,7 @@ const STAGES = [
   },
   {
     title: 'Applications Open',
-    body: 'Applications open shortly after. Fill out a short form and tell us a bit about yourself and your interest in quant.',
+    body: 'Applications are open now, through September 17 at 11:59 PM CST. Fill out the form and tell us a bit about yourself and your interest in quant.',
   },
   {
     title: 'Interviews',
@@ -44,7 +42,7 @@ export default function Join() {
   return (
     <>
       {/* ═══ Header ════════════════════════════════════════════ */}
-      <section className="on-ink relative overflow-hidden bg-ink pt-[4.5rem] text-paper">
+      <section className="on-ink relative overflow-hidden bg-ink pt-[var(--header-h)] text-paper">
         <div className="relative mx-auto max-w-7xl px-6 py-20 lg:px-10 lg:py-28">
           <SectionLabel index="01" tone="dark">Recruiting</SectionLabel>
 
@@ -60,24 +58,28 @@ export default function Join() {
               </p>
             </div>
 
-            {/* Stay Updated → the club's LinkedIn, where cycles are announced. */}
+            {/* The primary action on this page: applications are open
+                right now, with a real deadline. LinkedIn stays as a
+                secondary path for updates after this cycle closes. */}
             <div className="lg:col-span-5 lg:pt-4">
-              <div className="border border-edge-dark p-8 lg:p-9">
-                <h2 className="text-xl font-semibold text-paper">Stay in the loop</h2>
+              <div className="border-2 border-brand-600 p-8 lg:p-9">
+                <span className="eyebrow text-brand-400">Applications open</span>
+                <h2 className="mt-3 text-xl font-semibold text-paper">
+                  Apply by {APPLICATION_DEADLINE}.
+                </h2>
                 <p className="mt-4 text-base text-body-dark">
-                  Dates, deadlines, and application windows are announced on our
-                  LinkedIn page. Follow us there so you know the moment
-                  applications open.
+                  No prior experience in finance or programming required, only
+                  that you want to learn.
                 </p>
                 <a
-                  href={LINKEDIN}
+                  href={APPLICATION_FORM}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="group mt-8 inline-flex items-center gap-2.5 bg-brand-600 px-7 py-4
                              font-mono text-xs font-medium uppercase tracking-[0.16em] text-white
                              transition-colors duration-200 hover:bg-brand-500"
                 >
-                  Stay Updated
+                  Apply Now
                   <span
                     aria-hidden="true"
                     className="transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
@@ -86,13 +88,13 @@ export default function Join() {
                   </span>
                 </a>
                 <a
-                  href={INTEREST_FORM}
+                  href={LINKEDIN}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="group mt-2 inline-flex items-center gap-1.5 py-3 font-mono text-2xs uppercase
                              tracking-[0.16em] text-mute-dark transition-colors duration-200 hover:text-paper"
                 >
-                  Or fill out our interest form
+                  Or follow us on LinkedIn for updates
                   <span
                     aria-hidden="true"
                     className="transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"

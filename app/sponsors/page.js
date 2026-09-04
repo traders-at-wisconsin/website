@@ -72,7 +72,7 @@ export default async function Sponsors() {
   return (
     <>
       {/* ═══ Header ════════════════════════════════════════════ */}
-      <section className="on-ink relative overflow-hidden bg-ink pt-[4.5rem] text-paper">
+      <section className="on-ink relative overflow-hidden bg-ink pt-[var(--header-h)] text-paper">
         <div className="relative mx-auto max-w-7xl px-6 py-20 lg:px-10 lg:py-28">
           <SectionLabel index="01" tone="dark">Partners</SectionLabel>
 
@@ -120,16 +120,20 @@ export default async function Sponsors() {
                     <span className="h-px flex-1 bg-hair" aria-hidden="true" />
                   </div>
                 )}
-                <ul
-                  className={`grid gap-px border border-hair bg-hair ${
-                    group.tier === 'Platinum'
-                      ? 'sm:grid-cols-2'
-                      : 'sm:grid-cols-2 lg:grid-cols-3'
-                  }`}
-                >
+                {/* Flex, not grid: with an odd sponsor count a grid
+                    leaves a blank trailing cell (the parent's own
+                    background showing through an empty track). Flex-wrap
+                    has no such cell to leave empty, so justify-center
+                    centers a short last row instead of stranding it. */}
+                <ul className="flex flex-wrap justify-center gap-px border border-hair bg-hair">
                   {group.items.map((sponsor, i) => (
                     <SponsorCard
                       key={sponsor.name}
+                      className={
+                        group.tier === 'Platinum'
+                          ? 'w-full sm:w-1/2'
+                          : 'w-full sm:w-1/2 lg:w-1/3'
+                      }
                       sponsor={{
                         name: sponsor.name,
                         tier: sponsor.tier,

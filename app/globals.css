@@ -65,9 +65,19 @@
 
 @layer base {
   html {
+    /* Single source of truth for the fixed header stack: the
+       recruiting-deadline banner plus the nav bar beneath it. Every
+       page's top padding, the nav's own offset and scroll-padding-top
+       all read from these two, so the banner can come out later (after
+       the application deadline passes) by deleting the component and
+       resetting --banner-h to 0, with nothing else to hunt down. */
+    --banner-h: 2.5rem;
+    --nav-h: 4.5rem;
+    --header-h: calc(var(--banner-h) + var(--nav-h));
+
     scroll-behavior: smooth;
-    /* Clears the fixed 4.5rem header on #hash landings. */
-    scroll-padding-top: 5.5rem;
+    /* Clears the fixed header on #hash landings. */
+    scroll-padding-top: calc(var(--header-h) + 1rem);
     -webkit-tap-highlight-color: transparent;
   }
 
@@ -191,7 +201,11 @@
   .marquee-track > ul[aria-hidden='true'] { display: none; }
 }
 
-@keyframes cardIn {
-  from { opacity: 0; transform: translateY(18px) scale(0.96); }
-  to   { opacity: 1; transform: none; }
+/* One-shot arrival pulse for the sponsor card, fired the instant its
+   FLIP launch lands (see SponsorCard.js). A single expanding, fading
+   ring in the brand red, tied to a real state change, not a looping
+   decoration. */
+@keyframes cardPulse {
+  from { box-shadow: 0 0 0 0 rgba(197, 5, 12, 0.55); opacity: 1; }
+  to   { box-shadow: 0 0 0 34px rgba(197, 5, 12, 0); opacity: 0; }
 }

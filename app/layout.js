@@ -1,4 +1,5 @@
 import { IBM_Plex_Sans, IBM_Plex_Mono } from 'next/font/google'
+import AnnouncementBar from './components/AnnouncementBar'
 import NavBar from './components/NavBar'
 import Footer from './components/Footer'
 import RouteProgress from './components/RouteProgress'
@@ -66,6 +67,13 @@ export default function RootLayout({ children }) {
         >
           Skip to content
         </a>
+
+        {/* Fixed at the true viewport top; NavBar sits below it via
+            --banner-h, and every page's top padding accounts for both
+            via --header-h (see globals.css). */}
+        <div className="fixed inset-x-0 top-0 z-[110]">
+          <AnnouncementBar />
+        </div>
 
         <RouteProgress />
         <NavBar />

@@ -9,7 +9,7 @@ const faqs = [
   },
   {
     q: 'When do applications open?',
-    a: 'Applications open within the first few weeks of each semester, following the information session.',
+    a: 'Applications are open now for the current cycle, closing September 17 at 11:59 PM CST. In general, each cycle opens within the first few weeks of the semester, following the information session.',
   },
   {
     q: 'Where are recruiting dates and deadlines posted?',

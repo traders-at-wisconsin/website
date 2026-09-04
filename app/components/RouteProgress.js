@@ -61,7 +61,8 @@ export default function RouteProgress() {
 
   return (
     <div
-      className="fixed top-[4.5rem] left-0 right-0 z-[120] h-0.5 overflow-hidden pointer-events-none"
+      className="fixed left-0 right-0 z-[120] h-0.5 overflow-hidden pointer-events-none"
+      style={{ top: 'var(--header-h)' }}
       aria-hidden="true"
     >
       <div

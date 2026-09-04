@@ -30,7 +30,10 @@ export default function NavBar() {
     'flex h-full items-center px-1 text-sm text-body-dark hover:text-paper transition-colors duration-200'
 
   return (
-    <header className="on-ink fixed inset-x-0 top-0 z-[100] h-[4.5rem] bg-ink border-b border-hair-dark">
+    <header
+      className="on-ink fixed inset-x-0 z-[100] h-[var(--nav-h)] bg-ink border-b border-hair-dark"
+      style={{ top: 'var(--banner-h)' }}
+    >
       <div className="mx-auto flex h-full max-w-7xl items-center justify-between px-6 lg:px-10">
         <Link
           href="/"
@@ -86,7 +89,8 @@ export default function NavBar() {
       <div
         id="mobile-nav"
         hidden={!open}
-        className="fixed inset-x-0 top-[4.5rem] bottom-0 bg-ink px-6 pt-10 md:hidden"
+        className="fixed inset-x-0 bottom-0 bg-ink px-6 pt-10 md:hidden"
+        style={{ top: 'var(--header-h)' }}
       >
         <nav className="flex flex-col" aria-label="Primary">
           {LINKS.map(([label, href], i) => (
