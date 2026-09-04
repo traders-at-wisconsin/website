@@ -55,7 +55,12 @@ const FACTS = [
 async function getData() {
   const [placements, sponsors] = await Promise.all([
     safeFetch(`*[_type == "placement"] | order(orderRank asc) { company, category, photo }`),
-    safeFetch(`*[_type == "sponsor"] | order(_createdAt asc) { name, logo, website, tier }`),
+    // Excludes Belvedere at the requester's ask. No write token in this
+    // repo to remove the record in Sanity itself; filtered here and on
+    // the sponsors page instead.
+    safeFetch(
+      `*[_type == "sponsor" && name != "Belvedere"] | order(_createdAt asc) { name, logo, website, tier }`
+    ),
   ])
   return {
     placements: await measureAll(placements, (p) => p.photo),

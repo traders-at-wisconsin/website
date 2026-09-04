@@ -41,7 +41,11 @@ const PLACEMENT_GROUPS = [
 
 export default async function Sponsors() {
   const [rawSponsors, rawPlacements] = await Promise.all([
-    safeFetch(`*[_type == "sponsor"] | order(_createdAt asc) { name, logo, website, tier, description }`),
+    // Excludes Belvedere at the requester's ask; see the matching note
+    // in app/page.js.
+    safeFetch(
+      `*[_type == "sponsor" && name != "Belvedere"] | order(_createdAt asc) { name, logo, website, tier, description }`
+    ),
     // Excludes Playstation from the outcomes grid on this page, at the
     // requester's ask. Still present in the CMS and on the homepage
     // strip; only filtered here.
