@@ -13,7 +13,7 @@ const LINKEDIN = 'https://www.linkedin.com/company/traders-at-wisconsin/'
 // The live application form for the current recruiting cycle; see the
 // matching note in app/page.js.
 const APPLICATION_FORM = 'https://forms.gle/LGvknpaCkSKnGUoD8'
-const APPLICATION_DEADLINE = 'September 17, 11:59 PM CST'
+const APPLICATION_DEADLINE = 'September 21, 11:59 PM CST'
 
 const STAGES = [
   {
@@ -26,7 +26,7 @@ const STAGES = [
   },
   {
     title: 'Applications Open',
-    body: 'Applications are open now, through September 17 at 11:59 PM CST. Fill out the form and tell us a bit about yourself and your interest in quant.',
+    body: 'Applications are open now, through September 21 at 11:59 PM CST. Fill out the form and tell us a bit about yourself and your interest in quant.',
   },
   {
     title: 'Interviews',

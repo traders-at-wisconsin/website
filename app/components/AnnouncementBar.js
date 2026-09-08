@@ -15,7 +15,7 @@ import { useEffect, useState } from 'react'
  */
 
 const FORM_URL = 'https://forms.gle/LGvknpaCkSKnGUoD8'
-const DEADLINE = 'September 17, 11:59 PM CST'
+const DEADLINE = 'September 21, 11:59 PM CST'
 const MESSAGES = ['Applications are now open.', `Apply by ${DEADLINE}.`]
 const ROTATE_MS = 4200
 

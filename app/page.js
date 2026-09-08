@@ -9,14 +9,14 @@ import LogoImage from './components/LogoImage'
 import SectionLabel from './components/SectionLabel'
 
 // The live application form for the current recruiting cycle, closing
-// September 17 at 11:59 PM CST.
+// September 21 at 11:59 PM CST.
 //
 // NOTE: as of this writing, opening this link redirects a signed-out
 // visitor to a Google account sign-in page rather than the form
 // itself. Needs "Anyone with the link" access in Google Forms >
 // Settings before this is usable by prospective members. See README.
 const APPLICATION_FORM = 'https://forms.gle/LGvknpaCkSKnGUoD8'
-const APPLICATION_DEADLINE = 'September 17, 11:59 PM CST'
+const APPLICATION_DEADLINE = 'September 21, 11:59 PM CST'
 
 const WORK = [
   {
