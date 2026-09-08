@@ -33,6 +33,19 @@ const SUPPORT = [
 
 const TIER_ORDER = ['Platinum', 'Gold']
 
+/* Explicit wall order: HRT, Tower and SIG lead the top row, Old Mission
+   and PEAK6 sit centered beneath them. Sanity returns sponsors by
+   _createdAt, which does not match, and back-dating documents to steer a
+   layout would bury the intent somewhere nobody would look for it. */
+const SPONSOR_ORDER = ['Hudson River Trading', 'Tower', 'SIG', 'Old Mission', 'Peak6']
+
+/* Anything not named above sorts to the end rather than disappearing, so
+   a sponsor added in the CMS still shows up without a code change. */
+const rank = (name) => {
+  const i = SPONSOR_ORDER.indexOf(name)
+  return i === -1 ? SPONSOR_ORDER.length : i
+}
+
 /* Mirrors the Category options on the placement schema. */
 const PLACEMENT_GROUPS = [
   { key: 'Quant', label: 'Quant' },
@@ -58,6 +71,8 @@ export default async function Sponsors() {
     measureAll(rawSponsors, (s) => s.logo),
     measureAll(rawPlacements, (p) => p.photo),
   ])
+
+  sponsors.sort((a, b) => rank(a.name) - rank(b.name))
 
   // Only label tiers when more than one is actually populated, a lone
   // "Gold" heading over every sponsor reads as an accident.
@@ -120,19 +135,27 @@ export default async function Sponsors() {
                     <span className="h-px flex-1 bg-hair" aria-hidden="true" />
                   </div>
                 )}
-                {/* Flex, not grid: with an odd sponsor count a grid
-                    leaves a blank trailing cell (the parent's own
-                    background showing through an empty track). Flex-wrap
-                    has no such cell to leave empty, so justify-center
-                    centers a short last row instead of stranding it. */}
-                <ul className="flex flex-wrap justify-center gap-px border border-hair bg-hair">
+                {/* Flex, not grid, so a short last row centers instead of
+                    stranding a blank trailing cell.
+
+                    Hairlines belong on the cards, not on this container. A
+                    `gap-px` over a `bg-hair` parent paints every leftover
+                    strip grey, which is what showed as a slab around the
+                    centered last row. Each card now carries its own border
+                    and pulls back a pixel so neighbours share one line;
+                    whatever no card covers is simply the page.
+
+                    That pixel also has to leave the track: three `w-1/3`
+                    cards plus two `gap-px` gaps exceed 100% and wrapped the
+                    third card onto a row of its own. */}
+                <ul className="flex flex-wrap justify-center">
                   {group.items.map((sponsor, i) => (
                     <SponsorCard
                       key={sponsor.name}
                       className={
                         group.tier === 'Platinum'
-                          ? 'w-full sm:w-1/2'
-                          : 'w-full sm:w-1/2 lg:w-1/3'
+                          ? '-ml-px -mt-px w-full border border-hair sm:w-1/2'
+                          : '-ml-px -mt-px w-full border border-hair sm:w-1/2 lg:w-1/3'
                       }
                       sponsor={{
                         name: sponsor.name,
@@ -213,11 +236,11 @@ export default async function Sponsors() {
                     <span className="h-px flex-1 bg-hair" aria-hidden="true" />
                     <span className="eyebrow tabular text-mute">{items.length}</span>
                   </div>
-                  <ul className="grid grid-cols-2 gap-px border border-hair bg-hair sm:grid-cols-3 lg:grid-cols-4">
+                  <ul className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4">
                     {items.map((item) => (
                       <li
                         key={item.company}
-                        className="flex h-32 items-center justify-center bg-white px-6"
+                        className="-ml-px -mt-px flex h-32 items-center justify-center border border-hair bg-white px-6"
                       >
                         <LogoImage
                           source={item.photo}
