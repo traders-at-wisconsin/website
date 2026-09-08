@@ -6,6 +6,8 @@ import Wordmark from './Wordmark'
 
 const LINKS = [
   ['About', '/#about'],
+  // The board is the only page under /people for now.
+  ['People', '/people/board'],
   ['Recruiting', '/join'],
   ['Sponsors', '/sponsors'],
 ]

@@ -8,6 +8,7 @@ const EMAIL = 'tradersatwisconsin@gmail.com'
 const EXPLORE = [
   ['About', '/#about'],
   ['What We Do', '/#work'],
+  ['People', '/people/board'],
   ['Recruiting', '/join'],
   ['Sponsors', '/sponsors'],
 ]
